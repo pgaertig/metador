@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'metador'
+require 'ostruct'
+require 'yaml'
+
+metador_env = ENV['ENV'] || 'development'
+config = OpenStruct.new(YAML.load_file("config/config.yml")[metador_env])
+
+pipeline = Metador::MessageHandler.new(config)
+pipeline.amqp_worker

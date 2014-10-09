@@ -1,0 +1,13 @@
+development:
+  broker_uri: amqp://user:pass@rabbitmq-host/vhost
+  broker_queue: metador.v1
+  src_dir: '/opt/files/originals'
+  dest_dir: '/tmp/previews'
+
+test:
+
+production:
+  broker_uri: amqp://user:pass@rabbitmq-host/vhost
+  broker_queue: metador.v1
+  src_dir: '/opt/files/originals'
+  dest_dir: '/opt/files/previews'
