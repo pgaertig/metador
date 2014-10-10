@@ -1,24 +1,27 @@
 module Metador
-  class MetadorProcessor < BaseProcessor
+  class MetadorProcessor
 
-    attr_accessor :query_processor, :mime_extractor
+    pattr_initialize :config, :subprocessors
 
-    def initialize(config)
-      super(config)
-      @file_resolver = Metador::FileResolver.new(config)
-
-      @mime_processor = Metador::MimeProcessor.new(config)
-      @query_processor = Metador::QueryProcessor.new(config)
+    def self.build(config)
+      new(
+          config,
+          [
+              QueryProcessor.build(config)
+              #WebHookProcessor.build(config)
+          ]
+      )
     end
 
     def process(data)
-      @mime_processor.process(data, file_resolver: @file_resolver)
-      @query_processor.process(data,
-                               file_resolver: @file_resolver,
-                               preview_processor: PreviewProcessor.new(@config))
+      subprocessors.each do |p|
+        p.process(data) if p.accepts?(data)
+      end
       data
     end
 
-
+    def accepts?(data)
+      data #Non nil object
+    end
   end
 end

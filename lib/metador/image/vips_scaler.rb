@@ -1,8 +1,15 @@
 require 'vips'
 
+# Fastest image scaler which uses compression properties of jpeg to extract smaller
+# images directly by evaluating downsampled blocks. See: http://en.wikipedia.org/wiki/JPEG#Block_splitting
 module Metador
   module Image
     class VipsScaler
+
+      def accepts_mime?(mime)
+        mime =~ /^image\/(jpeg|tiff)/
+      end
+
       def scale(infile:nil, outfile:nil, ext:nil, size: 100)
         resize_vips infile, outfile, size, ext
       end

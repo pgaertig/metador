@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest", "~> 5.4.2"
   spec.add_development_dependency "json"
+  spec.add_development_dependency "guard-minitest"
 end

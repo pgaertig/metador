@@ -1,8 +1,15 @@
 require 'gdk_pixbuf2'
 
+# Quite fast image scaler using GDK2 or GDK3 pixel buffer scaling. Gnome also uses such
+# method to create thumbnails for image files in file managers.
 module Metador
   module Image
     class GdkScaler
+
+      def accepts_mime?(mime)
+        mime =~ /^image\/(png|jpeg|gif|jp20*|bmp|tiff)/
+      end
+
       def scale(infile:nil, outfile:nil, ext: 'jpg', size: 100)
         resize_pixbuf infile, outfile, size, ext =~ /jpg/ ? 'jpeg' : ext
       end

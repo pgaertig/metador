@@ -1,10 +1,23 @@
 module Metador
-  class MimeProcessor < BaseProcessor
+  class MimeProcessor
 
-    MIME_EXTRACTOR = Metador::Misc::MimeExtractor.new
+    pattr_initialize :config, :mime_extractor, :file_resolver
 
-    def process(data, file_resolver: )
-      data[:mime] = MIME_EXTRACTOR.find_mime(file_resolver.resolve_src(data[:source_file]))
+    def self.build(config)
+      new(
+          config,
+          Metador::Misc::MimeExtractor.new,
+          Metador::FileResolver.new(config)
+      )
+    end
+
+
+    def process(data)
+      data[:mime] = mime_extractor.find_mime(file_resolver.resolve_src(data[:source_file]))
+    end
+
+    def accepts?(data)
+      true #Always detect source file mime
     end
   end
 end

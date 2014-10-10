@@ -6,7 +6,7 @@ require 'ostruct'
 
 class FixturedTest < MiniTest::Spec
   TEST_FIXTURES = File.expand_path('../../../kp-test-files', __FILE__)
-  IMAGE_DIR = File.join(TEST_FIXTURES, 'images')
+  SAMPLE_DIR = File.join(TEST_FIXTURES, 'samples')
   GEN_DIR = TEST_FIXTURES + "/generated"
 
   before do
@@ -15,7 +15,7 @@ class FixturedTest < MiniTest::Spec
 
     @config = OpenStruct.new({
                                  src_dir: TEST_FIXTURES,
-                                 dest_dir: TEST_FIXTURES + "/generated"
+                                 dest_dir: GEN_DIR
                              })
   end
 

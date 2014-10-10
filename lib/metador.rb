@@ -1,13 +1,12 @@
 require "metador/version"
 require "bunny"
 require "json"
+require 'attr_extras'
 
 module Metador
 
   autoload :FileResolver, 'metador/file_resolver'
-  autoload :BaseProcessor, 'metador/base_processor'
-  autoload :FfmpegVideoProcessor, 'metador/ffmpeg_video_processor'
-  autoload :FileTypeDetect, 'metador/file_type_detect'
+  autoload :MimeExtractor, 'metador/misc/mime_extractor'
   autoload :QueryProcessor, 'metador/query_processor'
   autoload :PreviewProcessor, 'metador/preview_processor'
   autoload :MetadorProcessor, 'metador/metador_processor'
@@ -17,11 +16,16 @@ module Metador
     autoload :GdkScaler, 'metador/image/gdk_scaler'
     autoload :VipsScaler, 'metador/image/vips_scaler'
     autoload :MagickScaler, 'metador/image/magick_scaler'
+    autoload :PreviewProcessor, 'metador/image/preview_processor'
   end
 
   module Misc
     autoload :PdfConverter, 'metador/misc/pdf_converter'
     autoload :MimeExtractor, 'metador/misc/mime_extractor'
+  end
+
+  module Video
+    autoload :PreviewProcessor, 'metador/video/preview_processor'
   end
 
   class MessageHandler

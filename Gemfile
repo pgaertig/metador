@@ -9,7 +9,7 @@ gem 'faraday' #Webhooks
 
 #Commons
 gem 'ffi'  #Link to libmagic
-
+gem 'attr_extras' #DI support
 
 #Image processing
 gem 'gdk_pixbuf2'

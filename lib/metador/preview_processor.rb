@@ -1,27 +1,35 @@
 require 'mini_magick'
 
+module Metador
+  class PreviewProcessor
 
+    pattr_initialize :config, :preview_processors
 
-
-class Metador::PreviewProcessor < Metador::BaseProcessor
-
-  SCALER = Metador::Image::GdkScaler
-
-  def process(data, file_resolver:)
-    preview_query = data[:query][:preview]
-    if preview_query
-      preview = data[:preview] = {destination_file: preview_query[:destination_file] + '.jpg'}
-      dest_path = file_resolver.resolve_dest(preview[:destination_file])
-
-      SCALER.new.scale(
-          infile: file_resolver.resolve_src(data[:source_file]),
-          outfile: dest_path,
-          size: preview_query[:size]
+    def self.build(config)
+      new(
+          config,
+          [
+              Metador::Video::PreviewProcessor.build(config),
+              Metador::Image::PreviewProcessor.build(config)
+          ]
       )
+    end
 
-      info = MiniMagick::Image.new dest_path
-      preview.merge!(width: info['width'], height: info['height'])
-      data
+    def process(data)
+      preview_processors.each do |p|
+        begin
+          if p.accepts?(data)
+            p.process(data)
+            break
+          end
+        rescue => e
+          puts "Preview processor #{p.class} failed with #{data[:source_file]}: #{e} #{e.backtrace}"
+        end
+      end
+    end
+
+    def accepts?(data)
+      data[:query][:preview]
     end
   end
 end

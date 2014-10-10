@@ -8,7 +8,7 @@ class GdkScalerTest < FixturedTest
 
 #  test "vips tiff scale" do
 #    time = Benchmark.realtime do
-#      ImageService.new.scale(infile: "#{IMAGE_DIR}/804335.tif", outfile: "#{GEN_DIR}/dupa3s.jpg", ext:'jpg', size:200, engine: :vips)
+#      ImageService.new.scale(infile: "#{SAMPLE_DIR}/804335.tif", outfile: "#{GEN_DIR}/dupa3s.jpg", ext:'jpg', size:200, engine: :vips)
 #    end
 #    p "VIPS big tiff #{time}"
 #  end
@@ -22,7 +22,7 @@ class GdkScalerTest < FixturedTest
 
   it "pixbuf tiff scale" do
     time = Benchmark.realtime do
-      assert @scaler.scale(infile:"#{IMAGE_DIR}/804335.tif", outfile: "#{GEN_DIR}/t1.jpg", ext:'jpg', size:200)
+      assert @scaler.scale(infile:"#{SAMPLE_DIR}/804335.tif", outfile: "#{GEN_DIR}/t1.jpg", ext:'jpg', size:200)
     end
     assert File.exist? "#{GEN_DIR}/t1.jpg"
     recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t1.jpg")
@@ -34,7 +34,7 @@ class GdkScalerTest < FixturedTest
 
   it "jpeg resize" do
     time = Benchmark.realtime do
-      @scaler.scale(infile:"#{IMAGE_DIR}/Metro_de_Madrid_-_Cuatro_Caminos_01.jpg", outfile: "#{GEN_DIR}/t2.jpg", ext:'jpg', size:600)
+      @scaler.scale(infile:"#{SAMPLE_DIR}/Metro_de_Madrid_-_Cuatro_Caminos_01.jpg", outfile: "#{GEN_DIR}/t2.jpg", ext:'jpg', size:600)
     end
     assert File.exist? "#{GEN_DIR}/t2.jpg"
     recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t2.jpg")
@@ -46,7 +46,7 @@ class GdkScalerTest < FixturedTest
 
   it "smaller should not scale" do
     time = Benchmark.realtime do
-      @scaler.scale(infile:"#{IMAGE_DIR}/hotlink.png", outfile: "#{GEN_DIR}/t3.jpg", ext:'jpg', size:600)
+      @scaler.scale(infile:"#{SAMPLE_DIR}/hotlink.png", outfile: "#{GEN_DIR}/t3.jpg", ext:'jpg', size:600)
     end
     assert File.exist? "#{GEN_DIR}/t3.jpg"
     recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t3.jpg")
@@ -58,7 +58,7 @@ class GdkScalerTest < FixturedTest
 
   describe "Reorients" do
     before do
-      @src = Gdk::Pixbuf.new("#{IMAGE_DIR}/orientationtest.png")
+      @src = Gdk::Pixbuf.new("#{SAMPLE_DIR}/orientationtest.png")
     end
 
     it "0 no orientation" do
