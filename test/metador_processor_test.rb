@@ -48,7 +48,7 @@ class MetadorProcessorTest < FixturedTest
         query: {
             preview: {
                 size: 160,
-                destination_file: "t1"
+                destination_file: "generated/t1"
             },
             meta: true,
         }
@@ -61,7 +61,7 @@ class MetadorProcessorTest < FixturedTest
                      query: {
                          preview: {
                              size: 160,
-                             destination_file: "t1"
+                             destination_file: "generated/t1"
                          },
                          meta: true
                      },
@@ -69,7 +69,7 @@ class MetadorProcessorTest < FixturedTest
                      preview: {
                          width: 128,
                          height: 72,
-                         destination_file: ["t1-01.jpg", "t1-02.jpg", "t1-03.jpg"]
+                         destination_file: ["generated/t1-01.jpg", "generated/t1-02.jpg", "generated/t1-03.jpg"]
                      }
                  }, result)
   end
@@ -80,7 +80,7 @@ class MetadorProcessorTest < FixturedTest
         query: {
             preview: {
                 size: 64,
-                destination_file: "t1"
+                destination_file: "generated/t1"
             },
             meta: true,
         }
@@ -93,7 +93,7 @@ class MetadorProcessorTest < FixturedTest
                      query: {
                          preview: {
                              size: 64,
-                             destination_file: "t1"
+                             destination_file: "generated/t1"
                          },
                          meta: true
                      },
@@ -101,7 +101,7 @@ class MetadorProcessorTest < FixturedTest
                      preview: {
                          width: 64,
                          height: 36,
-                         destination_file: ["t1-01.jpg", "t1-02.jpg", "t1-03.jpg"]
+                         destination_file: ["generated/t1-01.jpg", "generated/t1-02.jpg", "generated/t1-03.jpg"]
                      }
                  }, result)
   end
@@ -113,7 +113,7 @@ class MetadorProcessorTest < FixturedTest
         query: {
             preview: {
                 size: 200,
-                destination_file: "t1"
+                destination_file: "generated/t1"
             },
             meta: true,
         }
@@ -126,7 +126,7 @@ class MetadorProcessorTest < FixturedTest
                      query: {
                          preview: {
                              size: 200,
-                             destination_file: "t1"
+                             destination_file: "generated/t1"
                          },
                          meta: true
                      },
@@ -134,7 +134,7 @@ class MetadorProcessorTest < FixturedTest
                      preview: {
                          width: 155,
                          height: 200,
-                         destination_file: 't1.jpg'
+                         destination_file: 'generated/t1.jpg'
                      }
                  }, result)
   end

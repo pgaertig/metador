@@ -4,7 +4,7 @@ require 'mini_magick'
 ## Hq: convert -density 300 $f[0] -quality 100 -resize 960x +adjoin $f-%02da.png
 
 module Metador
-  module Misc
+  module Util
     class PdfConverter
       def scale(infile:nil, outfile:nil, ext: "png", size: 100)
         file = outfile + ".png"

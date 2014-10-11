@@ -1,7 +1,7 @@
 require 'ffi'
 
 module Metador
-  module Misc
+  module Util
     class MimeExtractor
 
       class Binding

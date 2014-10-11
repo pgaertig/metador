@@ -4,12 +4,12 @@ module Metador
   module Video
     class PreviewProcessor
 
-      pattr_initialize :config, :file_resolver
+      pattr_initialize :config, :path_mapper
 
       def self.build(config)
         new(
             config,
-            Metador::FileResolver.new(config)
+            Metador::Util::PathMapper.new(config)
         )
       end
 
@@ -18,7 +18,7 @@ module Metador
       end
 
       def process(data)
-        movie = FFMPEG::Movie.new(file_resolver.resolve_src(data[:source_file]))
+        movie = FFMPEG::Movie.new(path_mapper.map_src(data[:source_file]))
 
         return unless movie.valid?
 
@@ -55,7 +55,7 @@ module Metador
 
       def process_frame(movie, time, w, h, dest, no)
         dest = "#{dest}-%02d.jpg" % no
-        dest_path = file_resolver.resolve_dest(dest)
+        dest_path = path_mapper.map_dest(dest)
 
         #TODO make it faster https://trac.ffmpeg.org/wiki/Seeking%20with%20FFmpeg https://github.com/streamio/streamio-ffmpeg/pull/40
         movie.screenshot(dest_path,

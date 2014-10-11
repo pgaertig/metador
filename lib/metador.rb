@@ -5,7 +5,7 @@ require 'attr_extras'
 
 module Metador
 
-  autoload :FileResolver, 'metador/file_resolver'
+  autoload :PathMapper, 'metador/path_mapper'
   autoload :MimeExtractor, 'metador/misc/mime_extractor'
   autoload :QueryProcessor, 'metador/query_processor'
   autoload :PreviewProcessor, 'metador/preview_processor'
@@ -19,9 +19,10 @@ module Metador
     autoload :PreviewProcessor, 'metador/image/preview_processor'
   end
 
-  module Misc
-    autoload :PdfConverter, 'metador/misc/pdf_converter'
-    autoload :MimeExtractor, 'metador/misc/mime_extractor'
+  module Util
+    autoload :PdfConverter, 'metador/util/pdf_converter'
+    autoload :MimeExtractor, 'metador/util/mime_extractor'
+    autoload :PathMapper, 'metador/util/path_mapper'
   end
 
   module Video
@@ -34,7 +35,7 @@ module Metador
 
     def initialize(config)
       @config = config
-      @metador_processor = Metador::MetadorProcessor.new(config)
+      @metador_processor = Metador::MetadorProcessor.build(config)
     end
 
     def consume!(raw_data)

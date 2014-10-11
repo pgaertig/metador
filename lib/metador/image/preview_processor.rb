@@ -2,12 +2,12 @@ require 'mini_magick'
 
 class Metador::Image::PreviewProcessor
 
-  pattr_initialize :config, :file_resolver, :scalers
+  pattr_initialize :config, :path_mapper, :scalers
 
   def self.build(config)
     new(
         config,
-        Metador::FileResolver.new(config),
+        Metador::Util::PathMapper.new(config),
         [
             Metador::Image::VipsScaler.new,
             Metador::Image::GdkScaler.new,
@@ -20,12 +20,12 @@ class Metador::Image::PreviewProcessor
     preview_query = data[:query][:preview]
     if preview_query
       preview = {destination_file: preview_query[:destination_file] + '.jpg'}
-      dest_path = file_resolver.resolve_dest(preview[:destination_file])
+      dest_path = path_mapper.map_dest(preview[:destination_file])
 
       scalers.each do |scaler|
         begin
           scaler.scale(
-              infile: file_resolver.resolve_src(data[:source_file]),
+              infile: path_mapper.map_src(data[:source_file]),
               outfile: dest_path,
               size: preview_query[:size]
           ) if scaler.accepts_mime?(data[:mime])
