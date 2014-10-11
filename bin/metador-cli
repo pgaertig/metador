@@ -8,4 +8,4 @@ metador_env = ENV['ENV'] || 'development'
 config = OpenStruct.new(YAML.load_file("config/config.yml")[metador_env])
 
 pipeline = Metador::MessageHandler.new(config)
-puts pipeline.consume(ARGF.read)
+puts pipeline.consume!(ARGF.read)

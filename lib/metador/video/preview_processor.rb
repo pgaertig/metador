@@ -1,15 +1,14 @@
-require 'streamio-ffmpeg'
-
 module Metador
   module Video
     class PreviewProcessor
 
-      pattr_initialize :config, :path_mapper
+      pattr_initialize :config, :path_mapper, :ffmpeg_binding
 
       def self.build(config)
         new(
             config,
-            Metador::Util::PathMapper.new(config)
+            Metador::Util::PathMapper.new(config),
+            Metador::Video::FfmpegBinding.new
         )
       end
 
@@ -18,21 +17,22 @@ module Metador
       end
 
       def process(data)
-        movie = FFMPEG::Movie.new(path_mapper.map_src(data[:source_file]))
-
-        return unless movie.valid?
+        src_file = path_mapper.map_src(data[:source_file])
+        mmeta = ffmpeg_binding.meta(src_file)
+        vstream = mmeta.first_video_stream
+        return unless vstream
 
         query_preview = data[:query][:preview]
 
         #Calculate number of screenshots
-        d = movie.duration
+        d = vstream.duration
         n = d > 30 ? 3 : 1
         n += ([3600, d].min / 300).to_i # each 5 minutes adds one more frame
 
         #Calculate screenshot size with proper aspect ratio
         s = query_preview[:size] || 160
-        w = movie.width
-        h = movie.height
+        w = vstream.width
+        h = vstream.height
         tw = [s, w * [s/w,s/h].min].min.to_i
         th = [s, h * [s/w,s/h].min].min.to_i
 
@@ -40,7 +40,7 @@ module Metador
 
         (1..n).each {|no|
           time = ((no - 0.5) * d / n).to_i
-          files << process_frame(movie, time, tw, th, query_preview[:destination_file], no)
+          files << process_frame(src_file, time, tw, th, query_preview[:destination_file], no)
         }
 
         unless files.empty?
@@ -53,15 +53,12 @@ module Metador
         data
       end
 
-      def process_frame(movie, time, w, h, dest, no)
+      def process_frame(src, time, w, h, dest, no)
         dest = "#{dest}-%02d.jpg" % no
         dest_path = path_mapper.map_dest(dest)
 
-        #TODO make it faster https://trac.ffmpeg.org/wiki/Seeking%20with%20FFmpeg https://github.com/streamio/streamio-ffmpeg/pull/40
-        movie.screenshot(dest_path,
-                         seek_time: time,
-                         resolution: "#{w}x#{h}",
-                         custom: '-vf select="eq(pict_type\,I)"')
+        ffmpeg_binding.screenshot(src, dest_path, time, w, h)
+
         dest if File.exists? dest_path
       end
     end

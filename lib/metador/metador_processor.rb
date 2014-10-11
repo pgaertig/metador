@@ -7,8 +7,8 @@ module Metador
       new(
           config,
           [
-              QueryProcessor.build(config)
-              #WebHookProcessor.build(config)
+              QueryProcessor.build(config),
+              WebHookProcessor.build(config)
           ]
       )
     end

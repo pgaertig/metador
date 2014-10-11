@@ -6,11 +6,11 @@ require 'attr_extras'
 module Metador
 
   autoload :PathMapper, 'metador/path_mapper'
-  autoload :MimeExtractor, 'metador/misc/mime_extractor'
   autoload :QueryProcessor, 'metador/query_processor'
   autoload :PreviewProcessor, 'metador/preview_processor'
   autoload :MetadorProcessor, 'metador/metador_processor'
   autoload :MimeProcessor, 'metador/mime_processor'
+  autoload :WebHookProcessor, 'metador/web_hook_processor'
 
   module Image
     autoload :GdkScaler, 'metador/image/gdk_scaler'
@@ -26,7 +26,9 @@ module Metador
   end
 
   module Video
+    autoload :FfmpegBinding, 'metador/video/ffmpeg_binding'
     autoload :PreviewProcessor, 'metador/video/preview_processor'
+    autoload :Movie, 'metador/video/movie'
   end
 
   class MessageHandler
