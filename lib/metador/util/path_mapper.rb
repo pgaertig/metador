@@ -31,9 +31,9 @@ module Metador
 
       def map_path(path)
         @mappings.each { |m|
-          k = m[:from]
+          k = m["from"]
           if path.start_with? k
-            return m[:to] + path[k.size..-1]
+            return m["to"] + path[k.size..-1]
           end
         }
         path
