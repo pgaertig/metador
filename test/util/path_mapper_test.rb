@@ -13,7 +13,7 @@ class PathMapperTest < FixturedTest
     pm = Metador::Util::PathMapper.new(
         OpenStruct.new({
             path_mappings: [
-                {from: "/test1", to: "/mnt/files"}
+                {"from" => "/test1", "to" => "/mnt/files"}
             ]}))
 
     out = pm.map_src "/test1/test123.jpg", exists: false
@@ -24,8 +24,8 @@ class PathMapperTest < FixturedTest
     pm = Metador::Util::PathMapper.new(
         OpenStruct.new({
                            path_mappings: [
-                               {from: "/", to: "/opt/"},
-                               {from: "/test1", to: "/mnt/files"}
+                               {"from" => "/", "to" =>  "/opt/"},
+                               {"from" => "/test1", "to" =>  "/mnt/files"}
                            ]}))
 
     out = pm.map_src "/test1/test123.jpg", exists: false
@@ -36,8 +36,8 @@ class PathMapperTest < FixturedTest
     pm = Metador::Util::PathMapper.new(
         OpenStruct.new({
                            path_mappings: [
-                               {from: "/test2", to: "/opt/"},
-                               {from: "/test1", to: "/mnt/files"}
+                               {"from" => "/test2", "to" =>  "/opt/"},
+                               {"from" => "/test1", "to" =>  "/mnt/files"}
                            ]}))
 
     out = pm.map_src "/foo/test123.jpg", exists: false
@@ -48,7 +48,7 @@ class PathMapperTest < FixturedTest
     pm = Metador::Util::PathMapper.new(
         OpenStruct.new({
                            path_mappings: [
-                               {from: "/test1", to: "/mnt/files"}
+                               {"from" => "/test1", "to" =>  "/mnt/files"}
                            ]}))
 
     out = pm.map_dest "/test1/test123.jpg"

@@ -15,8 +15,8 @@ class FixturedTest < MiniTest::Spec
 
     @config = OpenStruct.new({
         path_mappings: [
-            {from: 'samples/', to: SAMPLE_DIR},
-            {from: 'generated/', to: GEN_DIR}
+            {"from" => 'samples/', "to" => SAMPLE_DIR},
+            {"from" => 'generated/', "to" => GEN_DIR}
         ]})
   end
 

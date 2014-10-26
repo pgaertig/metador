@@ -34,7 +34,8 @@ class MetadorProcessorTest < FixturedTest
                      preview: {
                          width: 75,
                          height: 100,
-                         destination_file: 'generated/t1.jpg'
+                         destination_file: 'generated/t1.jpg',
+                         "_debug"=>{:scaler=>"Metador::Image::VipsScaler"}
                      }
                  }, result)
   end
@@ -134,7 +135,8 @@ class MetadorProcessorTest < FixturedTest
                      preview: {
                          width: 155,
                          height: 200,
-                         destination_file: 'generated/t1pdf.jpg'
+                         destination_file: 'generated/t1pdf.jpg',
+                         "_debug"=>{:scaler=>"Metador::Image::MagickScaler"}
                      }
                  }, result)
   end

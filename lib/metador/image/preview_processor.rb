@@ -32,7 +32,7 @@ class Metador::Image::PreviewProcessor
 
           if File.exist?(dest_path)
             info = MiniMagick::Image.new dest_path
-            preview.merge!(width: info['width'], height: info['height'])
+            preview.merge!(width: info['width'], height: info['height'], "_debug" => {scaler: scaler.class.name})
             data[:preview] = preview
             break
           end

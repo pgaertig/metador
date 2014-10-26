@@ -56,4 +56,63 @@ class VipsScalerTest < FixturedTest
     assert_equal 2069, binary.size
   end
 
+  describe "Reorients" do
+    before do
+      @src = VIPS::Image.png("#{SAMPLE_DIR}/orientationtest.png")
+    end
+
+    def src_to_arr
+      a = []
+      src2 = @scaler.vips_reorient @src
+      src2.each_pixel{|value,x,y| a << value}
+      a.flatten
+    end
+
+    it "0 no orientation" do
+      assert_equal [0, 0, 0, 128, 128, 128, 170, 170, 170, 255, 255, 255], src_to_arr
+    end
+
+    #0 row, 0 column
+    it "1 top left" do
+      @src.set("exif-ifd0-Orientation", "1")
+      assert_equal [0, 0, 0, 128, 128, 128, 170, 170, 170, 255, 255, 255], src_to_arr
+    end
+
+    it "2 top right" do
+      @src.set("exif-ifd0-Orientation", "2")
+      assert_equal [128, 128, 128, 0, 0, 0, 255, 255, 255, 170, 170, 170], src_to_arr
+    end
+
+    it "3 bottom right" do
+      @src.set("exif-ifd0-Orientation", "3")
+      assert_equal [255, 255, 255, 170, 170, 170, 128, 128, 128, 0, 0, 0], src_to_arr
+    end
+
+    it "4 bottom left" do
+      @src.set("exif-ifd0-Orientation", "4")
+      assert_equal [170, 170, 170, 255, 255, 255, 0, 0, 0, 128, 128, 128], src_to_arr
+    end
+
+    it "5 left top" do
+      @src.set("exif-ifd0-Orientation", "5")
+      assert_equal [0, 0, 0, 170, 170, 170, 128, 128, 128, 255, 255, 255], src_to_arr
+    end
+
+    it "6 right top" do
+      @src.set("exif-ifd0-Orientation", "6")
+      assert_equal [170, 170, 170, 0, 0, 0, 255, 255, 255, 128, 128, 128], src_to_arr
+    end
+
+    it "7 right bottom" do
+      @src.set("exif-ifd0-Orientation", "7")
+      assert_equal [255, 255, 255, 128, 128, 128, 170, 170, 170, 0, 0, 0], src_to_arr
+    end
+
+    it "8 left bottom" do
+      @src.set("exif-ifd0-Orientation", "8")
+      assert_equal [128, 128, 128, 255, 255, 255, 0, 0, 0, 170, 170, 170], src_to_arr
+    end
+
+  end
+
 end
