@@ -33,8 +33,8 @@ module Metador
         s = query_preview[:size] || 160
         w = vstream.width
         h = vstream.height
-        tw = [s, w * [s/w,s/h].min].min.to_i
-        th = [s, h * [s/w,s/h].min].min.to_i
+        tw = [w, s, w * s / h].min.to_i
+        th = [h, s, h * s / w].min.to_i
 
         files = []
 

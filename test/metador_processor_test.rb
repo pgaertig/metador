@@ -68,8 +68,8 @@ class MetadorProcessorTest < FixturedTest
                      },
                      mime: 'video/quicktime',
                      preview: {
-                         width: 128,
-                         height: 72,
+                         width: 64,
+                         height: 36,
                          destination_file: ["generated/t1-01.jpg", "generated/t1-02.jpg", "generated/t1-03.jpg"]
                      }
                  }, result)
@@ -80,7 +80,7 @@ class MetadorProcessorTest < FixturedTest
         source_file: 'samples/test1.mov',
         query: {
             preview: {
-                size: 64,
+                size: 35,
                 destination_file: "generated/t1"
             },
             meta: true,
@@ -93,15 +93,15 @@ class MetadorProcessorTest < FixturedTest
                      source_file: 'samples/test1.mov',
                      query: {
                          preview: {
-                             size: 64,
+                             size: 35,
                              destination_file: "generated/t1"
                          },
                          meta: true
                      },
                      mime: 'video/quicktime',
                      preview: {
-                         width: 64,
-                         height: 36,
+                         width: 35,
+                         height: 19,
                          destination_file: ["generated/t1-01.jpg", "generated/t1-02.jpg", "generated/t1-03.jpg"]
                      }
                  }, result)
