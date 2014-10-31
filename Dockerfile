@@ -18,6 +18,9 @@ RUN apt-get update -yq && \
     apt-get install -yq ruby ruby2.1 bundler && \
     apt-get clean
 
+# Installing Uniconvertor (CDR + AI) and Ufraw for ImageMagick to convert CorelDRAW and RAW files
+RUN apt-get install -yq python-uniconvertor ufraw && apt-get clean
+
 RUN adduser --disabled-password --home=/rubyapp --gecos "" rubyapp
 ADD Gemfile /rubyapp/Gemfile
 ADD metador.gemspec /rubyapp/metador.gemspec
@@ -31,4 +34,5 @@ ADD . /rubyapp
 #RUN chown -R rubyapp:rubyapp /rubyapp
 
 #USER rubyapp
-CMD ENV=production bundle exec ./bin/metador-worker
+ENV ENV production
+CMD exec bundle exec ./bin/metador-worker 2>&1 >> /mnt/logs/$HOSTNAME.log

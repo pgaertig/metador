@@ -1,0 +1,6 @@
+
+1.0.0 on 2014-10-31 22:22
+
+ + This is first official release
+ + Feature: Converts RAW files and CorelDRAW
+ + Improvement: ImageMagick hint to speedup JPEG scaling
