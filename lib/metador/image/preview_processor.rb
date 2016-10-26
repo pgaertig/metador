@@ -9,7 +9,7 @@ class Metador::Image::PreviewProcessor
         config,
         Metador::Util::PathMapper.new(config),
         [
-            Metador::Image::VipsScaler.new,
+#            Metador::Image::VipsScaler.new,
             Metador::Image::GdkScaler.new,
             Metador::Image::MagickScaler.new
         ]

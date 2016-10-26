@@ -3,7 +3,7 @@ module Metador
     class PathMapper
       attr_reader :config
 
-      class MapperException < Exception
+      class MapperException < RuntimeError
       end
 
       def initialize(config)

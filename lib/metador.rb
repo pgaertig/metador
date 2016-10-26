@@ -57,17 +57,17 @@ module Metador
       x  = ch.default_exchange
       ch.prefetch 1
 
-      q.subscribe(block: true, ack: true) do |delivery_info, metadata, payload|
+      q.subscribe(block: true, manual_ack: true) do |delivery_info, metadata, payload|
         begin
           puts "Received #{payload}"
           result = consume!(payload)
           #x.publish(JSON.unparse(result), :routing_key => "")
           puts "Reponded: #{result}"
           ch.ack(delivery_info.delivery_tag)
-        rescue
+        rescue => e
           #sleep 1
-          #ch.nack(delivery_info.delivery_tag, true)
-          p "#{$!} #{$!.backtrace}"
+          ch.nack(delivery_info.delivery_tag, true)
+          p "#{$e} #{$e.backtrace}. Continuing next file."
         end
       end
       conn.close
