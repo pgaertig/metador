@@ -5,7 +5,8 @@ require 'ostruct'
 require 'yaml'
 
 metador_env = ENV['ENV'] || 'development'
-config = OpenStruct.new(YAML.load_file("config/config.yml")[metador_env])
+metador_config = ENV["CONFIG"] || "config/config.yml"
+config = OpenStruct.new(YAML.load_file(metador_config)[metador_env])
 
 pipeline = Metador::MessageHandler.new(config)
 puts pipeline.consume!(ARGF.read)

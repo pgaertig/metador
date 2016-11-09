@@ -2,8 +2,9 @@
 
 echo "ffmpeg `ffmpeg -version`"
 
-USER_ID=${LOCAL_USER_ID:-1000}
-GROUP_ID=${LOCAL_GROUP_ID:-1000}
+export USER_ID=${LOCAL_USER_ID:-1000}
+export GROUP_ID=${LOCAL_GROUP_ID:-1000}
+export ENV=${CONFIG_ENV:-development}
 
 echo "Starting with UID=$USER_ID and GID=$GROUP_ID"
 groupadd -g $GROUP_ID -o rubyapp

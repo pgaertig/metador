@@ -11,7 +11,7 @@ class FixturedTest < MiniTest::Spec
 
   before do
     #Clean output dir
-    FileUtils.rm_rf(Dir.glob(File.join(GEN_DIR, '*')))
+    #FileUtils.rm(Dir.glob(File.join(GEN_DIR, '*')))
 
     @config = OpenStruct.new({
         path_mappings: [

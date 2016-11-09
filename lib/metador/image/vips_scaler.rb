@@ -20,11 +20,11 @@ module Metador
             [-1,  32, -1,],
             [-1, -1,  -1]
         ]
-        m = VIPS::Mask.new mask, 24, 0
+        m = Vips::Image.new_from_array mask, 24
 
         a = vips_load_file infile, filetype
 
-        d = [a.x_size, a.y_size].max
+        d = [a.width, a.height].max
         shrink = d / size.to_f
 
         if filetype == "jpg"
@@ -38,7 +38,7 @@ module Metador
 
           a = vips_load_file infile, filetype, load_shrink
 
-          d = [a.x_size, a.y_size].max
+          d = [a.width, a.height].max
           shrink = d / size.to_f
         end
 
@@ -49,21 +49,27 @@ module Metador
         id = (d / ishrink).to_i
         rscale = size.to_f / id
 
-        a = a.shrink(ishrink)
-        a = a.tile_cache(a.x_size, 1, 30)
-        a = a.affinei_resize(:nohalo, rscale)
+        a = a.shrink(ishrink,ishrink)
+        #a = a.tile_cache(a.width, 1, 30)
+        #a = a.affinei_resize(:nohalo, rscale)
+        a = a.resize(rscale)
         a = a.conv(m)
 
-        jpeg = VIPS::JPEGWriter.new(a, {:quality => 75})
-        jpeg.remove_icc
-        jpeg.remove_exif
+#        jpeg = Vips::JPEGWriter.new(a, {:quality => 75})
+#        jpeg.remove_icc
+#        jpeg.remove_exif
 
-        outfile ? jpeg.write(outfile) : jpeg.to_memory
+        if outfile
+          a.write_to_file(outfile, strip: true, :Q => 75)
+          outfile
+        else
+          a.write_to_buffer(".jpg", strip: true, :Q => 75)
+        end
       end
 
       def vips_reorient src
         begin
-          orient = src.get("exif-ifd0-Orientation") || "0"
+          orient = src.get("exif-Orientation") || src.get("exif-ifd0-Orientation") || "X"
           orient = orient[0]
           case orient
             when "2" then
@@ -83,24 +89,21 @@ module Metador
             else
               src
           end
-        rescue VIPS::Error
+        rescue Vips::Error
           src
         end
       end
 
       def vips_load_file(infile, filetype = "jpg", shrink=1)
         if filetype == "jpg"
-          VIPS::Image.jpeg infile,
-                           :shrink_factor => shrink,
-                           :sequential => true
+          Vips::Image.new_from_file infile, access: :sequential,
+                           :shrink => shrink
         elsif filetype == "tif"
-          VIPS::Image.tiff infile,
-                           :sequential => true
+          Vips::Image.new_from_file infile, access: :sequential
         elsif filetype == "png"
-          VIPS::Image.png infile,
-                          :sequential => true
+          Vips::Image.new_from_file infile, access: :sequential
         else
-          VIPS::Image.new infile
+          Vips::Image.new_from_file infile, access: :sequential
         end
       end
 
