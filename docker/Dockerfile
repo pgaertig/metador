@@ -7,9 +7,10 @@ ENV DEBIAN_FRONTEND=noninteractive HOME=/rubyapp GEM_HOME=/rubyapp/.gems
 #   - VIPS for ruby-vips,  Imagemagick for MiniMagick, GDK Pixbuf
 #   - Uniconvertor (CDR + AI) and Ufraw for ImageMagick to convert CorelDRAW and RAW files
 #   - libmagic - detecting file formats
+#   - ghostscript - PDF conversion
 RUN apt-get update -yq && apt-get upgrade -yq && \
     apt-get install -yq --no-install-recommends \
-                        imagemagick ffmpeg libvips libgdk-pixbuf2.0-0 \
+                        imagemagick ffmpeg libvips libgdk-pixbuf2.0-0 ghostscript \
                         libgirepository1.0 gir1.2-vips-8.0 gir1.2-gdkpixbuf-2.0 \
                         python-uniconvertor ufraw libmagic1 && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
