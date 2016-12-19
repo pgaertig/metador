@@ -11,13 +11,13 @@ class VipsScalerTest < FixturedTest
     #assert ! File.exist?("#{GEN_DIR}/t1.jpg")
   end
 
-
   it "tiff scale" do
     time = Benchmark.realtime do
-      assert @scaler.scale(infile:"#{SAMPLE_DIR}/804335.tif", outfile: "#{GEN_DIR}/t1.jpg", ext:'tiff', size:200)
+      #24000x11433
+      assert @scaler.scale(infile:"#{SAMPLE_DIR}/804335.tif", outfile: "#{GEN_DIR}/t1vips.jpg", ext:'tif', size:200)
     end
-    assert File.exist? "#{GEN_DIR}/t1.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t1.jpg")
+    assert File.exist? "#{GEN_DIR}/t1vips.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t1vips.jpg")
     assert recognized
     assert_equal 200, x
     assert_equal 95, y
@@ -26,92 +26,84 @@ class VipsScalerTest < FixturedTest
 
   it "jpeg resize" do
     time = Benchmark.realtime do
-      @scaler.scale(infile:"#{SAMPLE_DIR}/Metro_de_Madrid_-_Cuatro_Caminos_01.jpg", outfile: "#{GEN_DIR}/t2.jpg", ext:'jpg', size:600)
+      @scaler.scale(infile:"#{SAMPLE_DIR}/Metro_de_Madrid_-_Cuatro_Caminos_01.jpg", outfile: "#{GEN_DIR}/t2vips.jpg", ext:'jpg', size:600)
     end
-    assert File.exist? "#{GEN_DIR}/t2.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t2.jpg")
+    assert File.exist? "#{GEN_DIR}/t2vips.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t2vips.jpg")
     assert recognized
     assert_equal 450, x
     assert_equal 600, y
     p time
   end
 
-  it "smaller should not scale" do
-    skip "doesn't work in scaler"
+  it "smaller jpeg should not resize" do
     time = Benchmark.realtime do
-      @scaler.scale(infile:"#{SAMPLE_DIR}/hotlink.png", outfile: "#{GEN_DIR}/t3.jpg", ext:'png', size:600)
+      #334x500
+      @scaler.scale(infile:"#{SAMPLE_DIR}/895c032c06bbde148c036aff9d259cfac63aa6ac.jpg", outfile: "#{GEN_DIR}/t3vips.jpg", ext:'jpg', size:800)
     end
-    assert File.exist? "#{GEN_DIR}/t3.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t3.jpg")
+    assert File.exist? "#{GEN_DIR}/t3vips.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t3vips.jpg")
     assert recognized
-    assert_equal 600, x
-    assert_equal 468, y
+    assert_equal 334, x
+    assert_equal 500, y
+    p time
+  end
+
+  it "smaller jpeg should not resize to extra large" do
+    time = Benchmark.realtime do
+      @scaler.scale(infile:"#{SAMPLE_DIR}/Metro_de_Madrid_-_Cuatro_Caminos_01.jpg", outfile: "#{GEN_DIR}/t4vips.jpg", ext:'jpg', size:30000)
+    end
+    assert File.exist? "#{GEN_DIR}/t4vips.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t4vips.jpg")
+    assert recognized
+    assert_equal 1920, x
+    assert_equal 2560, y
+    p time
+  end
+
+  it "smaller png should not scale" do
+    time = Benchmark.realtime do
+      @scaler.scale(infile:"#{SAMPLE_DIR}/hotlink.png", outfile: "#{GEN_DIR}/t5vips.jpg", ext:'png', size:600)
+    end
+    assert File.exist? "#{GEN_DIR}/t5vips.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t5vips.jpg")
+    assert recognized
+    assert_equal 368, x
+    assert_equal 287, y
     p time
   end
 
 
   it "in memory" do
     binary = @scaler.scale(infile: "#{SAMPLE_DIR}/IMG_2033.JPG" ,ext:'jpg')
-    assert_equal 1941, binary.size
+    assert_in_delta(1900, binary.size, 100)
   end
 
-  describe "Reorients" do
-
-    before do
-      skip "Test need reimplementation for ruby-vips-1.0"
-      @src = Vips::Image.new_from_file("#{SAMPLE_DIR}/orientationtest.png")
+  it "reorient downscaled jpeg" do
+    time = Benchmark.realtime do
+      # 450x600 -> 300x225
+      @scaler.scale(infile:"#{SAMPLE_DIR}/exif-orientation-examples/Landscape_8.jpg", outfile: "#{GEN_DIR}/t6vips.jpg", ext:'jpg', size:300)
     end
-
-    def src_to_arr
-      src2 = @scaler.vips_reorient @src
-      src2.to_a.flatten.collect(&:to_i)
-    end
-
-    it "0 no orientation" do
-      assert_equal [0, 0, 0, 128, 128, 128, 170, 170, 170, 255, 255, 255], src_to_arr
-    end
-
-    #0 row, 0 column
-    it "1 top left" do
-      @src.set_int("exif-Orientation", 1)
-      assert_equal [0, 0, 0, 128, 128, 128, 170, 170, 170, 255, 255, 255], src_to_arr
-    end
-
-    it "2 top right" do
-      @src.set_int("exif-Orientation", 2)
-      assert_equal [128, 128, 128, 0, 0, 0, 255, 255, 255, 170, 170, 170], src_to_arr
-    end
-
-    it "3 bottom right" do
-      @src.set("exif-Orientation", "3")
-      assert_equal [255, 255, 255, 170, 170, 170, 128, 128, 128, 0, 0, 0], src_to_arr
-    end
-
-    it "4 bottom left" do
-      @src.set("exif-Orientation", "4")
-      assert_equal [170, 170, 170, 255, 255, 255, 0, 0, 0, 128, 128, 128], src_to_arr
-    end
-
-    it "5 left top" do
-      @src.set("exif-Orientation", "5")
-      assert_equal [0, 0, 0, 170, 170, 170, 128, 128, 128, 255, 255, 255], src_to_arr
-    end
-
-    it "6 right top" do
-      @src.set("exif-Orientation", "6")
-      assert_equal [170, 170, 170, 0, 0, 0, 255, 255, 255, 128, 128, 128], src_to_arr
-    end
-
-    it "7 right bottom" do
-      @src.set("exif-Orientation", "7")
-      assert_equal [255, 255, 255, 128, 128, 128, 170, 170, 170, 0, 0, 0], src_to_arr
-    end
-
-    it "8 left bottom" do
-      @src.set("exif-Orientation", "8")
-      assert_equal [128, 128, 128, 255, 255, 255, 0, 0, 0, 170, 170, 170], src_to_arr
-    end
-
+    assert File.exist? "#{GEN_DIR}/t6vips.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t6vips.jpg")
+    assert recognized
+    assert_equal 300, x
+    assert_equal 225, y
+    p time
   end
+
+  it "reorient non-scaled jpeg" do
+    time = Benchmark.realtime do
+      # 450x600 -> 300x225
+      @scaler.scale(infile:"#{SAMPLE_DIR}/exif-orientation-examples/Landscape_8.jpg", outfile: "#{GEN_DIR}/t6vips.jpg", ext:'jpg', size:800)
+    end
+    assert File.exist? "#{GEN_DIR}/t6vips.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t6vips.jpg")
+    assert recognized
+    assert_equal 600, x
+    assert_equal 450, y
+    p time
+  end
+
 
 end

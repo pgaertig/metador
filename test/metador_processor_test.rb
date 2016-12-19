@@ -13,7 +13,7 @@ class MetadorProcessorTest < FixturedTest
         query: {
             preview: {
                 size: 100,
-                destination_file: "generated/t1"
+                destination_file: "generated/t1metador"
             },
             meta: true,
         }
@@ -26,7 +26,7 @@ class MetadorProcessorTest < FixturedTest
                      query: {
                          preview: {
                              size: 100,
-                             destination_file: "generated/t1"
+                             destination_file: "generated/t1metador"
                          },
                          meta: true
                      },
@@ -34,7 +34,7 @@ class MetadorProcessorTest < FixturedTest
                      preview: {
                          width: 75,
                          height: 100,
-                         destination_file: 'generated/t1.jpg',
+                         destination_file: 'generated/t1metador.jpg',
                          "_debug"=>{:scaler=>"Metador::Image::VipsScaler"}
                      }
                  }, result)
@@ -49,7 +49,7 @@ class MetadorProcessorTest < FixturedTest
         query: {
             preview: {
                 size: 160,
-                destination_file: "generated/t1"
+                destination_file: "generated/t2metador"
             },
             meta: true,
         }
@@ -62,7 +62,7 @@ class MetadorProcessorTest < FixturedTest
                      query: {
                          preview: {
                              size: 160,
-                             destination_file: "generated/t1"
+                             destination_file: "generated/t2metador"
                          },
                          meta: true
                      },
@@ -70,7 +70,7 @@ class MetadorProcessorTest < FixturedTest
                      preview: {
                          width: 64,
                          height: 36,
-                         destination_file: ["generated/t1-01.jpg", "generated/t1-02.jpg", "generated/t1-03.jpg"]
+                         destination_file: ["generated/t2metador-01.jpg", "generated/t2metador-02.jpg", "generated/t2metador-03.jpg"]
                      }
                  }, result)
   end
@@ -81,7 +81,7 @@ class MetadorProcessorTest < FixturedTest
         query: {
             preview: {
                 size: 35,
-                destination_file: "generated/t1"
+                destination_file: "generated/t3metador"
             },
             meta: true,
         }
@@ -94,7 +94,7 @@ class MetadorProcessorTest < FixturedTest
                      query: {
                          preview: {
                              size: 35,
-                             destination_file: "generated/t1"
+                             destination_file: "generated/t3metador"
                          },
                          meta: true
                      },
@@ -102,7 +102,7 @@ class MetadorProcessorTest < FixturedTest
                      preview: {
                          width: 35,
                          height: 19,
-                         destination_file: ["generated/t1-01.jpg", "generated/t1-02.jpg", "generated/t1-03.jpg"]
+                         destination_file: ["generated/t3metador-01.jpg", "generated/t3metador-02.jpg", "generated/t3metador-03.jpg"]
                      }
                  }, result)
   end
@@ -139,5 +139,39 @@ class MetadorProcessorTest < FixturedTest
                          "_debug"=>{:scaler=>"Metador::Image::MagickScaler"}
                      }
                  }, result)
+  end
+
+  it "process raw NEF" do
+    data = {
+        source_file: 'samples/raw/DSC_0001.NEF',
+        query: {
+            preview: {
+                size: 600,
+                destination_file: "generated/t1raw"
+            },
+            meta: true,
+        }
+    }
+
+    result = @metador.process(data)
+
+    assert_equal(
+        {
+          source_file: 'samples/raw/DSC_0001.NEF',
+          query: {
+            preview: {
+              size: 600,
+              destination_file: "generated/t1raw"
+            },
+            meta: true
+          },
+          mime: 'image/tiff', #that is bad really
+          preview: {
+            width: 401,
+            height: 600,
+            destination_file: 'generated/t1raw.jpg',
+            "_debug"=>{:scaler=>"Metador::Image::MagickScaler"}
+          }
+        }, result)
   end
 end

@@ -5,13 +5,19 @@ require 'ostruct'
 
 
 class FixturedTest < MiniTest::Spec
-  TEST_FIXTURES = File.expand_path('../../../kp-test-files', __FILE__)
+  CONTAINER_TEST_FILES = '/rubyapp-test-files'
+  TEST_FIXTURES = File.directory?(CONTAINER_TEST_FILES) ?
+      CONTAINER_TEST_FILES : File.expand_path('../../../kp-test-files', __FILE__)
   SAMPLE_DIR = File.join(TEST_FIXTURES, 'samples/')
   GEN_DIR = TEST_FIXTURES + "/generated/"
 
+  @@clean_dir = true
   before do
     #Clean output dir
-    #FileUtils.rm(Dir.glob(File.join(GEN_DIR, '*')))
+    if @@clean_dir
+      FileUtils.rm(Dir.glob(File.join(GEN_DIR, '*')))
+      @@clean_dir = false
+    end
 
     @config = OpenStruct.new({
         path_mappings: [

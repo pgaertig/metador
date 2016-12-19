@@ -14,18 +14,17 @@ class GdkScalerTest < FixturedTest
 #  end
 
   before do
-    FileUtils.rm_rf(Dir.glob(File.join(GEN_DIR, '*')))
     @scaler = Metador::Image::GdkScaler.new
-    assert ! File.exist?("#{GEN_DIR}/t1.jpg")
+    assert ! File.exist?("#{GEN_DIR}/t1gdk.jpg")
   end
 
 
   it "pixbuf tiff scale" do
     time = Benchmark.realtime do
-      assert @scaler.scale(infile:"#{SAMPLE_DIR}/804335.tif", outfile: "#{GEN_DIR}/t1.jpg", ext:'jpg', size:200)
+      assert @scaler.scale(infile:"#{SAMPLE_DIR}/804335.tif", outfile: "#{GEN_DIR}/t1gdk.jpg", ext:'jpg', size:200)
     end
-    assert File.exist? "#{GEN_DIR}/t1.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t1.jpg")
+    assert File.exist? "#{GEN_DIR}/t1gdk.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t1gdk.jpg")
     assert recognized
     assert_equal 200, x
     assert_equal 95, y
@@ -34,10 +33,10 @@ class GdkScalerTest < FixturedTest
 
   it "jpeg resize" do
     time = Benchmark.realtime do
-      @scaler.scale(infile:"#{SAMPLE_DIR}/Metro_de_Madrid_-_Cuatro_Caminos_01.jpg", outfile: "#{GEN_DIR}/t2.jpg", ext:'jpg', size:600)
+      @scaler.scale(infile:"#{SAMPLE_DIR}/Metro_de_Madrid_-_Cuatro_Caminos_01.jpg", outfile: "#{GEN_DIR}/t2gdk.jpg", ext:'jpg', size:600)
     end
-    assert File.exist? "#{GEN_DIR}/t2.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t2.jpg")
+    assert File.exist? "#{GEN_DIR}/t2gdk.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t2gdk.jpg")
     assert recognized
     assert_equal 450, x
     assert_equal 600, y
@@ -46,10 +45,10 @@ class GdkScalerTest < FixturedTest
 
   it "smaller should not scale" do
     time = Benchmark.realtime do
-      @scaler.scale(infile:"#{SAMPLE_DIR}/hotlink.png", outfile: "#{GEN_DIR}/t3.jpg", ext:'jpg', size:600)
+      @scaler.scale(infile:"#{SAMPLE_DIR}/hotlink.png", outfile: "#{GEN_DIR}/t3gdk.jpg", ext:'jpg', size:600)
     end
-    assert File.exist? "#{GEN_DIR}/t3.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t3.jpg")
+    assert File.exist? "#{GEN_DIR}/t3gdk.jpg"
+    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t3gdk.jpg")
     assert recognized
     assert_equal 600, x
     assert_equal 468, y

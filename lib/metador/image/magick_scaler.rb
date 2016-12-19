@@ -5,7 +5,7 @@ module Metador
   module Image
     class MagickScaler
 
-      def accepts_mime?(mime)
+      def accepts_mime?(mime, ext)
         true #fallback scaler, takes anything
       end
 
@@ -17,6 +17,7 @@ module Metador
           conv.define "jpeg:size=#{dim}"
           conv.alpha "remove"
           conv.alpha "off"
+          conv.auto_orient
           conv << infile + "[0]"
           conv << outfile
         end

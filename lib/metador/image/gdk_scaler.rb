@@ -6,8 +6,8 @@ module Metador
   module Image
     class GdkScaler
 
-      def accepts_mime?(mime)
-        mime =~ /^image\/(png|jpeg|gif|jp20*|bmp|tiff)/
+      def accepts_mime?(mime, ext)
+        mime =~ /^image\/(png|jpeg|gif|jp20*|bmp)/
       end
 
       def scale(infile:nil, outfile:nil, ext: 'jpg', size: 100)

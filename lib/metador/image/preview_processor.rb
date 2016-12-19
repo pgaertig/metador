@@ -22,13 +22,17 @@ class Metador::Image::PreviewProcessor
       preview = {destination_file: preview_query[:destination_file] + '.jpg'}
       dest_path = path_mapper.map_dest(preview[:destination_file])
 
+      src_path = path_mapper.map_src(data[:source_file])
+      src_ext = extension(data[:source_file])
+
       scalers.each do |scaler|
         begin
           scaler.scale(
-              infile: path_mapper.map_src(data[:source_file]),
+              infile: src_path ,
               outfile: dest_path,
-              size: preview_query[:size]
-          ) if scaler.accepts_mime?(data[:mime])
+              size: preview_query[:size],
+              ext: src_ext,
+          ) if scaler.accepts_mime?(data[:mime], src_ext)
 
           if File.exist?(dest_path)
             info = MiniMagick::Image.new dest_path
@@ -45,7 +49,11 @@ class Metador::Image::PreviewProcessor
     end
   end
 
+  def extension(path)
+    File.extname(path).strip.downcase[1..-1]
+  end
+
   def accepts?(data)
-    data[:mime] && scalers.find {|s| s.accepts_mime?(data[:mime])}
+    data[:mime] && scalers.find {|s| s.accepts_mime?(data[:mime], extension(data[:source_file]))}
   end
 end

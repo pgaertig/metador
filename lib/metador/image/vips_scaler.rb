@@ -6,54 +6,59 @@ module Metador
   module Image
     class VipsScaler
 
-      def accepts_mime?(mime)
-        mime =~ /^image\/(jpeg|tiff|png)/
+      def accepts_mime?(mime, ext=nil)
+        mime =~ /^image\/(jpeg|png)/ || (ext && ext =~ /^tiff?$/)
       end
 
-      def scale(infile:nil, outfile:nil, ext:nil, size: 100)
-        resize_vips infile, outfile, size, ext
+      def scale(infile:nil, outfile:nil, ext:nil, size: 100, upscale:false)
+        resize_vips infile, outfile, size, ext, upscale
       end
 
-      def resize_vips infile, outfile, size, filetype
+      def resize_vips infile, outfile, size, filetype, upscale
         mask = [
             [-1, -1,  -1],
             [-1,  32, -1,],
             [-1, -1,  -1]
         ]
-        m = Vips::Image.new_from_array mask, 24
+        m = Vips::Image.new_from_array(mask, 24)
 
         a = vips_load_file infile, filetype
 
         d = [a.width, a.height].max
-        shrink = d / size.to_f
+        scale = d / size.to_f
 
         if filetype == "jpg"
-          if shrink >= 8
-            load_shrink = 8
-          elsif shrink >= 4
-            load_shrink = 4
-          elsif shrink >= 2
-            load_shrink = 2
+          if scale >= 8
+            load_scale = 8
+          elsif scale >= 4
+            load_scale = 4
+          elsif scale >= 2
+            load_scale = 2
           end
 
-          a = vips_load_file infile, filetype, load_shrink
+          if load_scale
+            a = vips_load_file infile, filetype, load_scale
 
-          d = [a.width, a.height].max
-          shrink = d / size.to_f
+            d = [a.width, a.height].max
+            scale = d / size.to_f
+          end
+        end
+
+
+#        ishrink = shrink.to_i
+
+#        id = (d / ishrink).to_i
+#        rscale = size.to_f / id
+
+#        a = a.shrink(ishrink,ishrink)
+        #a = a.tile_cache(a.width, 1, 30)
+        #a = a.affinei_resize(:nohalo, rscale)
+        if scale > 1 || upscale
+          a = a.resize(1 / scale)
+          a = a.conv(m)
         end
 
         a = vips_reorient a
-
-        ishrink = shrink.to_i
-
-        id = (d / ishrink).to_i
-        rscale = size.to_f / id
-
-        a = a.shrink(ishrink,ishrink)
-        #a = a.tile_cache(a.width, 1, 30)
-        #a = a.affinei_resize(:nohalo, rscale)
-        a = a.resize(rscale)
-        a = a.conv(m)
 
 #        jpeg = Vips::JPEGWriter.new(a, {:quality => 75})
 #        jpeg.remove_icc
@@ -94,11 +99,11 @@ module Metador
         end
       end
 
-      def vips_load_file(infile, filetype = "jpg", shrink=1)
+      def vips_load_file(infile, filetype = "jpg", shrink_level=1)
         if filetype == "jpg"
           Vips::Image.new_from_file infile, access: :sequential,
-                           :shrink => shrink
-        elsif filetype == "tif"
+                           shrink: shrink_level, autorotate: true
+        elsif filetype =~ /tiff?/
           Vips::Image.new_from_file infile, access: :sequential
         elsif filetype == "png"
           Vips::Image.new_from_file infile, access: :sequential
