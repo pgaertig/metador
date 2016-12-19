@@ -28,8 +28,7 @@ RUN apt-get update -yq && apt-get install -yq --no-install-recommends ruby2.3 ru
 #    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # These files need to be added first to reinvoke gems installation once they change
-ADD Gemfile /rubyapp/Gemfile
-ADD metador.gemspec /rubyapp/metador.gemspec
+ADD Gemfile Gemfile.lock metador.gemspec /rubyapp/
 ADD lib/metador/version.rb /rubyapp/lib/metador/version.rb
 
 # Installing gems with build dependencies. Once built dependencies are removed to keep image small.

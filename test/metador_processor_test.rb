@@ -143,7 +143,7 @@ class MetadorProcessorTest < FixturedTest
 
   it "process raw NEF" do
     data = {
-        source_file: 'samples/raw/DSC_0001.NEF',
+        source_file: 'samples/raw/raw_nef_1.NEF',
         query: {
             preview: {
                 size: 600,
@@ -157,7 +157,7 @@ class MetadorProcessorTest < FixturedTest
 
     assert_equal(
         {
-          source_file: 'samples/raw/DSC_0001.NEF',
+          source_file: 'samples/raw/raw_nef_1.NEF',
           query: {
             preview: {
               size: 600,

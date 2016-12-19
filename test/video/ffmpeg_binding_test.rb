@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class GdkScalerTest < FixturedTest
+class FfmpegBindingTest < FixturedTest
 
   it "should read meta of video" do
 

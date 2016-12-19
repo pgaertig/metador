@@ -11,12 +11,12 @@ class FixturedTest < MiniTest::Spec
   SAMPLE_DIR = File.join(TEST_FIXTURES, 'samples/')
   GEN_DIR = TEST_FIXTURES + "/generated/"
 
-  @@clean_dir = true
+  @@clean_dir ||= false
   before do
     #Clean output dir
-    if @@clean_dir
+    unless @@clean_dir
       FileUtils.rm(Dir.glob(File.join(GEN_DIR, '*')))
-      @@clean_dir = false
+      @@clean_dir = true
     end
 
     @config = OpenStruct.new({

@@ -15,7 +15,6 @@ class GdkScalerTest < FixturedTest
 
   before do
     @scaler = Metador::Image::GdkScaler.new
-    assert ! File.exist?("#{GEN_DIR}/t1gdk.jpg")
   end
 
 
