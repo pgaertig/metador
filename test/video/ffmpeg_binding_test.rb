@@ -5,7 +5,7 @@ class FfmpegBindingTest < FixturedTest
   it "should read meta of video" do
 
     fb = Metador::Video::FfmpegBinding.new
-    result = fb.meta(File.join(SAMPLE_DIR, 'test1.mov'))
+    result = fb.meta(File.join(@video_dir, 'tiny.mov'))
 
     assert result
     assert result.first_video_stream
@@ -15,7 +15,7 @@ class FfmpegBindingTest < FixturedTest
   it "should not read meta of non video file" do
 
     fb = Metador::Video::FfmpegBinding.new
-    result = fb.meta(File.join(SAMPLE_DIR, 'HallerVC07.pdf'))
+    result = fb.meta(File.join(@document_dir, 'HallerVC07.pdf'))
 
     assert ! result
 

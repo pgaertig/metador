@@ -2,6 +2,7 @@ require 'bundler/setup'
 require 'metador'
 require 'minitest/autorun'
 require 'ostruct'
+require 'json_expressions/minitest'
 
 
 class FixturedTest < MiniTest::Spec
@@ -13,17 +14,17 @@ class FixturedTest < MiniTest::Spec
 
   @@clean_dir ||= false
   before do
+    @image_dir = File.join(TEST_FIXTURES,'image/')
+    @video_dir = File.join(TEST_FIXTURES,'video/')
+    @document_dir = File.join(TEST_FIXTURES, 'document/')
+
     #Clean output dir
     unless @@clean_dir
       FileUtils.rm(Dir.glob(File.join(GEN_DIR, '*')))
       @@clean_dir = true
     end
 
-    @config = OpenStruct.new({
-        path_mappings: [
-            {"from" => 'samples/', "to" => SAMPLE_DIR},
-            {"from" => 'generated/', "to" => GEN_DIR}
-        ]})
+
   end
 
 end

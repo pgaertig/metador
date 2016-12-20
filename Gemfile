@@ -18,4 +18,4 @@ gem 'gio2'
 gem 'gdk_pixbuf2'
 gem 'exifr'
 gem 'ruby-vips', '1.0.3'
-gem 'mini_magick', git: 'https://github.com/minimagick/minimagick.git', branch: "master" #"9b5e976b08f0c3816151a92b424fc9f7e5981d35"
+gem 'mini_magick', '4.6.0'

@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/minimagick/minimagick.git
-  revision: 24438098e2597dbb9d20dfc1dcea398035da464c
-  branch: master
-  specs:
-    mini_magick (4.6.0)
-
 PATH
   remote: .
   specs:
@@ -46,12 +39,14 @@ GEM
       guard-compat (~> 1.2)
       minitest (>= 3.0)
     json (2.0.2)
+    json_expressions (0.8.3)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
     lumberjack (1.0.10)
     method_source (0.8.2)
+    mini_magick (4.6.0)
     minitest (5.9.1)
     multipart-post (2.0.0)
     nenv (0.3.0)
@@ -89,8 +84,9 @@ DEPENDENCIES
   guard
   guard-minitest
   json
+  json_expressions
   metador!
-  mini_magick!
+  mini_magick (= 4.6.0)
   minitest (~> 5.9.0)
   rake
   ruby-vips (= 1.0.3)

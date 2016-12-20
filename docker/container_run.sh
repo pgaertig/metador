@@ -1,5 +1,4 @@
 #!/bin/bash
-/rubyapp/docker/prepare_env.sh
+source /rubyapp/docker/prepare_env.sh
 chown -R rubyapp:rubyapp /rubyapp
-cd /rubyapp
-chroot --userspec rubyapp:rubyapp / /rubyapp/docker/chroot_run.sh
+chroot --userspec rubyapp:rubyapp / /bin/bash -c "cd /rubyapp && bundle exec ./bin/metador-worker 2>&1"

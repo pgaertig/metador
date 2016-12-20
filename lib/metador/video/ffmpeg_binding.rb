@@ -12,12 +12,14 @@ module Metador
       def screenshot(src_path, dest_path, time, w, h)
         cmd =
             "ffmpeg -y -ss #{time} -i #{Shellwords.escape(src_path)} " +
-            " -s #{w}x#{h} " +
             " -v warning" +
             ' -vf select="eq(pict_type\,I)" ' +
-            '-vframes 1 ' +
-            '-f image2 ' +
+            %Q{ -vf scale="iw*min(1\\,if(gt(iw\\,ih)\\,#{w}/iw\\,(#{h}*sar)/ih)):(floor((ow/dar)/2))*2" } +
+            ' -sws_flags fast_bilinear ' +
+            ' -q:v 2 -vframes 1 ' +
+            ' -f image2 ' +
             Shellwords.escape(dest_path)
+        puts "+ #{cmd}"
         @result = `#{cmd}`
       end
     end

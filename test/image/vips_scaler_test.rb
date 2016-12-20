@@ -75,7 +75,7 @@ class VipsScalerTest < FixturedTest
 
 
   it "in memory" do
-    binary = @scaler.scale(infile: "#{SAMPLE_DIR}/IMG_2033.JPG" ,ext:'jpg')
+    binary = @scaler.scale(infile: "#{@image_dir}/IMG_2033.JPG" ,ext:'jpg')
     assert_in_delta(1900, binary.size, 100)
   end
 

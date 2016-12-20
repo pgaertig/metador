@@ -31,23 +31,25 @@ module Metador
 
         #Calculate screenshot size with proper aspect ratio
         s = query_preview[:size] || 160
-        w = vstream.width
-        h = vstream.height
-        tw = [w, s, w * s / h].min.to_i
-        th = [h, s, h * s / w].min.to_i
+
+#        w = vstream.width
+#        h = vstream.height
 
         files = []
 
         (1..n).each {|no|
           time = ((no - 0.5) * d / n).to_i
-          files << process_frame(src_file, time, tw, th, query_preview[:destination_file], no)
+          files << process_frame(src_file, time, s, s, query_preview[:destination_file], no)
         }
 
         unless files.empty?
+          dest_path = files.first
+          info = MiniMagick::Image.new(path_mapper.map_dest(dest_path))
           data[:preview] = {
-              width: tw,
-              height: th,
-              destination_file: files
+              width: info['width'],
+              height: info['height'],
+              destination_file: files,
+              _debug: {scaler: self.class.name}
           }
         end
         data
