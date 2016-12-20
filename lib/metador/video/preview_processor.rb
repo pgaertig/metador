@@ -18,22 +18,18 @@ module Metador
 
       def process(data)
         src_file = path_mapper.map_src(data[:source_file])
-        mmeta = ffmpeg_binding.meta(src_file)
-        vstream = mmeta.first_video_stream
-        return unless vstream
+        meta = ffmpeg_binding.meta(src_file)
+        return unless meta.has_video?
 
         query_preview = data[:query][:preview]
 
         #Calculate number of screenshots
-        d = vstream.duration
+        d = meta.duration
         n = d > 30 ? 3 : 1
         n += ([3600, d].min / 300).to_i # each 5 minutes adds one more frame
 
         #Calculate screenshot size with proper aspect ratio
         s = query_preview[:size] || 160
-
-#        w = vstream.width
-#        h = vstream.height
 
         files = []
 
@@ -51,6 +47,7 @@ module Metador
               destination_file: files,
               _debug: {scaler: self.class.name}
           }
+          data[:meta] = meta.meta_map
         end
         data
       end

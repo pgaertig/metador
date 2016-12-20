@@ -3,6 +3,19 @@ require 'shellwords'
 module Metador
   module Video
     class FfmpegBinding
+
+      def initialize
+        begin
+          /^ffmpeg version (?<version>(?<major>\d+)\.(?<minor>\d+)[^\s]+)\s/ =~ `ffmpeg -version`
+
+          unless major&.to_i >= 3
+            raise "ffmpeg =>3.0 is required, detected: #{version}"
+          end
+        rescue Errno::ENOENT => ioe
+          raise "No ffmpeg executable found in run path: " + ioe.to_s
+        end
+      end
+
       def meta(path)
         cmd = "ffprobe -v quiet -print_format json -show_format -show_streams #{Shellwords.escape(path)}"
         result = JSON.parse(`#{cmd}`, symbolize_names: true)
