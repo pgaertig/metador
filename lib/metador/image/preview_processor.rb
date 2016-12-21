@@ -27,16 +27,19 @@ class Metador::Image::PreviewProcessor
 
       scalers.each do |scaler|
         begin
-          scaler.scale(
-              infile: src_path ,
-              outfile: dest_path,
-              size: preview_query[:size],
-              ext: src_ext,
-          ) if scaler.accepts_mime?(data[:mime], src_ext)
+          time = Benchmark.realtime do
+            scaler.scale(
+                infile: src_path ,
+                outfile: dest_path,
+                size: preview_query[:size],
+                mime: data[:mime],
+                ext: src_ext,
+            ) if scaler.accepts_mime?(data[:mime], src_ext)
+          end
 
           if File.exist?(dest_path)
             info = MiniMagick::Image.new dest_path
-            preview.merge!(width: info['width'], height: info['height'], "_debug" => {scaler: scaler.class.name})
+            preview.merge!(width: info['width'], height: info['height'], _debug: {scaler: scaler.class.name, process_time: time})
             data[:preview] = preview
             break
           end

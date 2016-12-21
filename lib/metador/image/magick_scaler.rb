@@ -9,7 +9,7 @@ module Metador
         true #fallback scaler, takes anything
       end
 
-      def scale(infile:nil, outfile:nil, ext:nil, size: 100)
+      def scale(infile:nil, outfile:nil, mime:nil, ext:nil, size: 100)
         MiniMagick::Tool::Convert.new do |conv|
           dim = "#{size}x#{size}"
           conv.thumbnail dim

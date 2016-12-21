@@ -21,7 +21,7 @@ class VideoTest < MetadorProcessorTest
             destination_file: %w[
                 generated/tiny.mov-01.jpg generated/tiny.mov-02.jpg generated/tiny.mov-03.jpg
             ],
-            _debug: {scaler: "Metador::Video::PreviewProcessor"},
+            _debug: {scaler: "Metador::Video::PreviewProcessor", process_time: Float},
         },
         meta: {
             duration: 99,
@@ -33,7 +33,8 @@ class VideoTest < MetadorProcessorTest
             video_codec_long: "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
             size: 446614,
             format_name: "QuickTime / MOV"
-        }
+        },
+        _debug: {process_time: Float}
     }.merge(input)
 
     assert_matches_metador(input, expected)
@@ -58,7 +59,7 @@ class VideoTest < MetadorProcessorTest
             destination_file: %w[
                generated/portrait.mp4-01.jpg generated/portrait.mp4-02.jpg generated/portrait.mp4-03.jpg
             ],
-            _debug: {scaler: "Metador::Video::PreviewProcessor"}
+            _debug: {scaler: "Metador::Video::PreviewProcessor", process_time: Float}
 
         },
         meta: {
@@ -76,7 +77,8 @@ class VideoTest < MetadorProcessorTest
             size: 160394452,
             format_name: "QuickTime / MOV",
             creation_time: "2016-10-05T15:48:09.000000Z"
-        }
+        },
+        _debug: {process_time: Float}
     }.merge(input)
 
     assert_matches_metador(input, expected)
@@ -101,7 +103,7 @@ class VideoTest < MetadorProcessorTest
             destination_file: %w[
                 generated/landscape.mp4-01.jpg generated/landscape.mp4-02.jpg generated/landscape.mp4-03.jpg
             ],
-            _debug: {scaler: "Metador::Video::PreviewProcessor"},
+            _debug: {scaler: "Metador::Video::PreviewProcessor", process_time: Float},
         },
         meta: {
             duration: 81,
@@ -118,7 +120,8 @@ class VideoTest < MetadorProcessorTest
             size: 176218966,
             format_name: "QuickTime / MOV",
             creation_time: "2016-08-25T12:21:09.000000Z"
-        }
+        },
+        _debug: {process_time: Float}
     }.merge(input)
 
     assert_matches_metador(input, expected)

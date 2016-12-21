@@ -33,10 +33,12 @@ module Metador
 
         files = []
 
-        (1..n).each {|no|
-          time = ((no - 0.5) * d / n).to_i
-          files << process_frame(src_file, time, s, s, query_preview[:destination_file], no)
-        }
+        time = Benchmark.realtime do
+          (1..n).each {|no|
+            time = ((no - 0.5) * d / n).to_i
+            files << process_frame(src_file, time, s, s, query_preview[:destination_file], no)
+          }
+        end
 
         unless files.empty?
           dest_path = files.first
@@ -45,7 +47,7 @@ module Metador
               width: info['width'],
               height: info['height'],
               destination_file: files,
-              _debug: {scaler: self.class.name}
+              _debug: {scaler: self.class.name, process_time: time}
           }
           data[:meta] = meta.meta_map
         end

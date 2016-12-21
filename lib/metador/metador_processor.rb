@@ -14,10 +14,12 @@ module Metador
     end
 
     def process(data)
-
-      subprocessors.each do |p|
-        p.process(data) if p.accepts?(data)
+      time = Benchmark.realtime do
+        subprocessors.each do |p|
+          p.process(data) if p.accepts?(data)
+        end
       end
+      (data[:_debug]||={})[:process_time] = time
       data
     end
 

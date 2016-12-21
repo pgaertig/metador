@@ -19,8 +19,9 @@ class ImageRawTest < MetadorProcessorTest
             width: 401,
             height: 600,
             destination_file: 'generated/raw1-nef.jpg',
-            _debug: {scaler: "Metador::Image::MagickScaler"}
-        }
+            _debug: {scaler: "Metador::Image::MagickScaler", process_time: Float}
+        },
+        _debug: {process_time: Float}
     }.merge(input)
 
     assert_matches_metador(input, expected)

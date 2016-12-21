@@ -19,8 +19,9 @@ class ImageJpegTest < MetadorProcessorTest
             width: 75,
             height: 100,
             destination_file: 'generated/IMG_2033-downscale.jpg',
-            "_debug" => {scaler: "Metador::Image::VipsScaler"}
-        }
+            _debug: {scaler: "Metador::Image::VipsScaler", process_time: Float}
+        },
+        _debug: {process_time: Float}
     }.merge(input)
 
     assert_matches_metador(input, expected)
@@ -44,8 +45,9 @@ class ImageJpegTest < MetadorProcessorTest
             width: 1536,
             height: 2048,
             destination_file: 'generated/IMG_2033-no-upscale.jpg',
-            "_debug" => {scaler: "Metador::Image::VipsScaler"}
-        }
+            _debug: {scaler: "Metador::Image::VipsScaler", process_time: Float}
+        },
+        _debug: {process_time: Float}
     }.merge(input)
 
     assert_matches_metador(input, expected)

@@ -18,8 +18,9 @@ class JpegTest < MetadorProcessorTest
             width: 155,
             height: 200,
             destination_file: 'generated/HallerVC07-pdf.jpg',
-            "_debug" => {scaler: "Metador::Image::MagickScaler"}
-        }
+            _debug: {scaler: "Metador::Image::MagickScaler", process_time: Float}
+        },
+        _debug: {process_time: Float}
     }.merge(input)
 
     assert_matches_metador(input, expected)
