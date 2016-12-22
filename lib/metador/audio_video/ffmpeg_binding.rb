@@ -1,7 +1,7 @@
 require 'shellwords'
 
 module Metador
-  module Video
+  module AudioVideo
     class FfmpegBinding
 
       def initialize
@@ -19,7 +19,7 @@ module Metador
       def meta(path)
         cmd = "ffprobe -v quiet -print_format json -show_format -show_streams #{Shellwords.escape(path)}"
         result = JSON.parse(`#{cmd}`, symbolize_names: true)
-        result.empty? ? nil : Metador::Video::Movie.new(result)
+        result.empty? ? nil : Meta.new(result)
       end
 
       def screenshot(src_path, dest_path, time, w, h)

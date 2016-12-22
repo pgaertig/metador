@@ -21,7 +21,7 @@ class VideoTest < MetadorProcessorTest
             destination_file: %w[
                 generated/tiny.mov-01.jpg generated/tiny.mov-02.jpg generated/tiny.mov-03.jpg
             ],
-            _debug: {scaler: "Metador::Video::PreviewProcessor", process_time: Float},
+            _debug: {scaler: "Metador::AudioVideo::PreviewProcessor", process_time: Float},
         },
         meta: {
             duration: 99,
@@ -32,7 +32,8 @@ class VideoTest < MetadorProcessorTest
             video_codec: "h264",
             video_codec_long: "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
             size: 446614,
-            format_name: "QuickTime / MOV"
+            format_name: "mov,mp4,m4a,3gp,3g2,mj2",
+            format_name_long: "QuickTime / MOV"
         },
         _debug: {process_time: Float}
     }.merge(input)
@@ -59,7 +60,7 @@ class VideoTest < MetadorProcessorTest
             destination_file: %w[
                generated/portrait.mp4-01.jpg generated/portrait.mp4-02.jpg generated/portrait.mp4-03.jpg
             ],
-            _debug: {scaler: "Metador::Video::PreviewProcessor", process_time: Float}
+            _debug: {scaler: "Metador::AudioVideo::PreviewProcessor", process_time: Float}
 
         },
         meta: {
@@ -70,12 +71,14 @@ class VideoTest < MetadorProcessorTest
             audio_codec: "aac",
             audio_codec_long: "AAC (Advanced Audio Coding)",
             audio_sample_rate: 48000,
+            audio_bit_rate: 256017,
             video: true,
             video_frame_rate: "30/1",
             video_codec: "h264",
             video_codec_long: "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
             size: 160394452,
-            format_name: "QuickTime / MOV",
+            format_name: "mov,mp4,m4a,3gp,3g2,mj2",
+            format_name_long: "QuickTime / MOV",
             creation_time: "2016-10-05T15:48:09.000000Z"
         },
         _debug: {process_time: Float}
@@ -103,7 +106,7 @@ class VideoTest < MetadorProcessorTest
             destination_file: %w[
                 generated/landscape.mp4-01.jpg generated/landscape.mp4-02.jpg generated/landscape.mp4-03.jpg
             ],
-            _debug: {scaler: "Metador::Video::PreviewProcessor", process_time: Float},
+            _debug: {scaler: "Metador::AudioVideo::PreviewProcessor", process_time: Float},
         },
         meta: {
             duration: 81,
@@ -113,12 +116,14 @@ class VideoTest < MetadorProcessorTest
             audio_codec: "aac",
             audio_codec_long: "AAC (Advanced Audio Coding)",
             audio_sample_rate: 48000,
+            audio_bit_rate: 256007,
             video: true,
             video_frame_rate: "30/1",
             video_codec: "h264",
             video_codec_long: "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
             size: 176218966,
-            format_name: "QuickTime / MOV",
+            format_name: "mov,mp4,m4a,3gp,3g2,mj2",
+            format_name_long: "QuickTime / MOV",
             creation_time: "2016-08-25T12:21:09.000000Z"
         },
         _debug: {process_time: Float}

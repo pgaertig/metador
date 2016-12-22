@@ -16,6 +16,7 @@ class FixturedTest < MiniTest::Spec
   before do
     @image_dir = File.join(TEST_FIXTURES,'image/')
     @video_dir = File.join(TEST_FIXTURES,'video/')
+    @audio_dir = File.join(TEST_FIXTURES,'audio/')
     @document_dir = File.join(TEST_FIXTURES, 'document/')
 
     #Clean output dir

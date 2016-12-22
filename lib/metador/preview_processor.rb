@@ -9,7 +9,7 @@ module Metador
       new(
           config,
           [
-              Metador::Video::PreviewProcessor.build(config),
+              Metador::AudioVideo::PreviewProcessor.build(config),
               Metador::Image::PreviewProcessor.build(config)
           ]
       )
@@ -29,7 +29,7 @@ module Metador
     end
 
     def accepts?(data)
-      data[:query][:preview]
+      data[:query][:preview] || data[:query][:meta]
     end
   end
 end

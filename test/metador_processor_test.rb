@@ -9,6 +9,7 @@ class MetadorProcessorTest < FixturedTest
                                  path_mappings: [
                                      {"from" => 'image/', "to" =>  @image_dir },
                                      {"from" => 'video/', "to" =>  @video_dir },
+                                     {"from" => 'audio/', "to" =>  @audio_dir },
                                      {"from" => 'document/', "to" =>  @document_dir },
                                      {"from" => 'generated/', "to" => GEN_DIR}
                                  ]})

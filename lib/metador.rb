@@ -25,10 +25,10 @@ module Metador
     autoload :PathMapper, 'metador/util/path_mapper'
   end
 
-  module Video
-    autoload :FfmpegBinding, 'metador/video/ffmpeg_binding'
-    autoload :PreviewProcessor, 'metador/video/preview_processor'
-    autoload :Movie, 'metador/video/movie'
+  module AudioVideo
+    autoload :FfmpegBinding, 'metador/audio_video/ffmpeg_binding'
+    autoload :PreviewProcessor, 'metador/audio_video/preview_processor'
+    autoload :Meta, 'metador/audio_video/meta'
   end
 
   class MessageHandler

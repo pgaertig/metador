@@ -1,6 +1,6 @@
 module Metador
-  module Video
-    class Movie
+  module AudioVideo
+    class Meta
 
       def initialize(ffmeta)
         streams = ffmeta[:streams].collect { |s| Stream.new(s) }
@@ -19,7 +19,8 @@ module Metador
                   duration: format[:duration]&.to_s&.to_i,
                   size: format[:size]&.to_s&.to_i,
                   creation_time: format[:tags]&.[](:creation_time)&.to_s,
-                  format_name: format[:format_long_name]
+                  format_name: format[:format_name]&.to_s,
+                  format_name_long: format[:format_long_name]&.to_s
               }.delete_if {| k, v | v.nil? }
           )
         end
@@ -77,6 +78,7 @@ module Metador
                     audio_codec: ffmeta[:codec_name]&.to_s,
                     audio_codec_long: ffmeta[:codec_long_name]&.to_s,
                     audio_sample_rate: ffmeta[:sample_rate]&.to_s&.to_i,
+                    audio_bit_rate: ffmeta[:bit_rate]&.to_s&.to_i,
                 }.delete_if {| k, v | v.nil? }
             )
           end
