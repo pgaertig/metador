@@ -12,7 +12,7 @@ RUN apt-get update -yq && apt-get dist-upgrade -yq && \
     apt-get install -yq --no-install-recommends \
                         imagemagick ffmpeg libvips libgdk-pixbuf2.0-0 ghostscript \
                         libgirepository1.0 gir1.2-vips-8.0 gir1.2-gdkpixbuf-2.0 \
-                        python-uniconvertor ufraw libmagic1 && \
+                        python-uniconvertor ufraw libmagic1 dumb-init && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/{man,doc,locale,zoneinfo,icons}
 
 # Install Ruby 2.3
