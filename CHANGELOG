@@ -1,3 +1,7 @@
+1.0.5 on 2017-09-12
+ + Remove Uniconverter support - poor quality conversions, problem with dependencies
+ + Add MXF and MTS video support
+
 1.0.4 on 2017-09-10
  + Fast RAW images conversion with Libraw 
 
