@@ -14,7 +14,7 @@ module Metador
 
       def accepts?(data)
         data[:mime] =~ /^(video|audio)\// or
-        data[:mime] == 'application/mxf'
+        %w(application/mxf model/vnd.mts application/mp4 application/octet-stream).include?(data[:mime])
       end
 
       def process(data)
