@@ -18,8 +18,7 @@ module Metador
     def process(data)
       preview_processors.each do |p|
         begin
-          if p.accepts?(data)
-            p.process(data)
+          if p.accepts?(data) and p.process(data)
             break
           end
         rescue => e

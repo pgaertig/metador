@@ -13,7 +13,8 @@ module Metador
       end
 
       def accepts?(data)
-        data[:mime] =~ /^(video|audio)\//
+        data[:mime] =~ /^(video|audio)\// or
+        data[:mime] == 'application/mxf'
       end
 
       def process(data)
