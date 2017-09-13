@@ -9,4 +9,10 @@ metador_config = ENV["CONFIG"] || "config/config.yml"
 config = OpenStruct.new(YAML.load_file(metador_config)[metador_env])
 
 pipeline = Metador::MessageHandler.new(config)
-pipeline.amqp_worker
+
+METADOR_WORKERS = ENV.fetch('METADOR_WORKERS') { 1 }
+METADOR_WORKER_LIFETIME = ENV.fetch('METADOR_WORKER_LIFETIME') { 100 }
+
+pipeline.amqp_multiple_workers(
+    METADOR_WORKERS.to_i,
+    METADOR_WORKER_LIFETIME.to_i)

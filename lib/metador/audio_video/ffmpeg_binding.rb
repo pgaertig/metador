@@ -33,7 +33,7 @@ module Metador
             ' -f image2 ' +
             Shellwords.escape(dest_path)
         puts "+ #{cmd}"
-        @result = `#{cmd}`
+        `#{cmd}`
       end
     end
   end

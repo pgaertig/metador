@@ -1,3 +1,6 @@
+1.1.0 on 2017-09-13
+ + Parallel processing workers
+
 1.0.5 on 2017-09-12
  + Remove Uniconverter support - poor quality conversions, problem with dependencies
  + Add MXF and MTS video support
