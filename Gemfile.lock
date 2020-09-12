@@ -48,6 +48,7 @@ GEM
     method_source (0.8.2)
     mini_magick (4.6.0)
     minitest (5.9.1)
+    msgpack (1.1.0)
     multipart-post (2.0.0)
     nenv (0.3.0)
     notiffany (0.1.1)
@@ -62,12 +63,17 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    rbtrace (0.4.8)
+      ffi (>= 1.0.6)
+      msgpack (>= 0.4.3)
+      trollop (>= 1.16.2)
     ruby-vips (1.0.3)
       gobject-introspection (= 3.0.8)
     ruby_dep (1.5.0)
     shellany (0.0.1)
     slop (3.6.0)
     thor (0.19.4)
+    trollop (2.1.2)
 
 PLATFORMS
   ruby
@@ -89,7 +95,8 @@ DEPENDENCIES
   mini_magick (= 4.6.0)
   minitest (~> 5.9.0)
   rake
+  rbtrace
   ruby-vips (= 1.0.3)
 
 BUNDLED WITH
-   1.13.6
+   1.14.5

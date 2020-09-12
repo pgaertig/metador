@@ -2,7 +2,7 @@
 THIS_DIR=`dirname "$0"`
 RUBYAPP_DIR=`readlink -f "${THIS_DIR}/../"`
 echo "Adding /rubyapp-test with mount to $RUBYAPP_DIR (read-only)"
-docker build --pull $RUBYAPP_DIR -f $THIS_DIR/docker/Dockerfile -t metador-test:latest
+docker build $RUBYAPP_DIR -f $THIS_DIR/docker/Dockerfile -t metador-test:latest
 docker run --rm -it \
            -v $RUBYAPP_DIR:/rubyapp-test:ro \
            -v $RUBYAPP_DIR/../../kp-test-files:/rubyapp-test-files:ro \

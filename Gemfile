@@ -10,6 +10,7 @@ gem 'faraday' #Webhooks
 
 
 #Commons
+gem 'rbtrace' #Runtime analysis
 gem 'ffi'  #Link to libmagic
 gem 'attr_extras' #DI support
 
