@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE policymap [
-        <!ELEMENT policymap (policy)+>
-        <!ATTLIST policymap xmlns CDATA #FIXED ''>
-        <!ELEMENT policy EMPTY>
-        <!ATTLIST policy xmlns CDATA #FIXED '' domain NMTOKEN #REQUIRED
-                name NMTOKEN #IMPLIED pattern CDATA #IMPLIED rights NMTOKEN #IMPLIED
-                stealth NMTOKEN #IMPLIED value CDATA #IMPLIED>
-        ]>
+  <!ELEMENT policymap (policy)+>
+  <!ATTLIST policymap xmlns CDATA #FIXED ''>
+  <!ELEMENT policy EMPTY>
+  <!ATTLIST policy xmlns CDATA #FIXED '' domain NMTOKEN #REQUIRED
+    name NMTOKEN #IMPLIED pattern CDATA #IMPLIED rights NMTOKEN #IMPLIED
+    stealth NMTOKEN #IMPLIED value CDATA #IMPLIED>
+]>
 <!--
   Configure ImageMagick policies.
 
@@ -57,12 +57,12 @@
   <!-- <policy domain="system" name="memory-map" value="anonymous"/> -->
   <!-- <policy domain="system" name="max-memory-request" value="256MiB"/> -->
   <!-- <policy domain="resource" name="temporary-path" value="/tmp"/> -->
-  <policy domain="resource" name="memory" value="512MiB"/>
-  <policy domain="resource" name="map" value="1GiB"/>
+  <policy domain="resource" name="memory" value="512MiB"/> <!-- more mem -->
+  <policy domain="resource" name="map" value="1GiB"/> <!-- more mem -->
   <policy domain="resource" name="width" value="16KP"/>
   <policy domain="resource" name="height" value="16KP"/>
   <!-- <policy domain="resource" name="list-length" value="128"/> -->
-  <policy domain="resource" name="area" value="512MB"/>
+  <policy domain="resource" name="area" value="512MB"/> <!-- more mem -->
   <policy domain="resource" name="disk" value="1GiB"/>
   <!-- <policy domain="resource" name="file" value="768"/> -->
   <!-- <policy domain="resource" name="thread" value="4"/> -->
@@ -86,11 +86,11 @@
   <policy domain="delegate" rights="none" pattern="HTTP" />
   <!-- in order to avoid to get image with password text -->
   <policy domain="path" rights="none" pattern="@*"/>
-  <!-- disable write of ghostscript format types -->
-  <policy domain="coder" rights="read" pattern="PS" />
-  <policy domain="coder" rights="read" pattern="PS2" />
-  <policy domain="coder" rights="read" pattern="PS3" />
-  <policy domain="coder" rights="read" pattern="EPS" />
-  <policy domain="coder" rights="read" pattern="PDF" />
-  <policy domain="coder" rights="read" pattern="XPS" />
+  <!-- disable ghostscript format types -->
+  <policy domain="coder" rights="none" pattern="PS" />
+  <policy domain="coder" rights="none" pattern="PS2" />
+  <policy domain="coder" rights="none" pattern="PS3" />
+  <policy domain="coder" rights="none" pattern="EPS" />
+  <policy domain="coder" rights="read" pattern="PDF" /> <!-- allow PDF conversion -->
+  <policy domain="coder" rights="read" pattern="XPS" /> <!-- allow XPS conversion -->
 </policymap>

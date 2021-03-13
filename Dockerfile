@@ -33,7 +33,7 @@ RUN apt-get update -yq && \
     apt-get remove -yq ruby-dev libgirepository1.0-dev libgdk-pixbuf2.0-dev libvips-dev libgsf-1-dev nasm && apt-get autoremove -yq && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/{man,doc,locale,zoneinfo,icons} && \
     rm -rf /var/lib/gems/*/cache /rubyapp/.bundle/cache /root/.bundle/cache && \
-    /rubyapp/util/setup_libraw_imagemagick.sh
+    /rubyapp/util/setup_imagemagick.sh
 
 ADD . /rubyapp
 
