@@ -8,7 +8,11 @@ cp $SCRIPTDIR/libraw_convert /usr/bin/
 
 #In case below fails delegates.xml needs to be revised for any changes
 DELEGATES_SHA=(`sha1sum /etc/ImageMagick-6/delegates.xml`)
-[ "$DELEGATES_SHA" == "5451e4bff881f3892f2c41e39511295555e78079" ]
+[ "$DELEGATES_SHA" == "7ad9096a3500fea41b8952deae7d848ab5f8f3e3" ]
 
 cp $SCRIPTDIR/delegates.xml /etc/ImageMagick-6/
 
+POLICY_SHA=(`sha1sum /etc/ImageMagick-6/policy.xml`)
+[ "$POLICY_SHA" == "a81655041f92a925e7a51ed71553ceed165f8475" ]
+
+cp $SCRIPTDIR/policy.xml /etc/ImageMagick-6/

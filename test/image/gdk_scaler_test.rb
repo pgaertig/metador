@@ -56,61 +56,61 @@ class GdkScalerTest < FixturedTest
 
   describe "Reorients" do
     before do
-      @src = Gdk::Pixbuf.new("#{SAMPLE_DIR}/orientationtest.png")
+      @src = Gdk::Pixbuf.new(file: "#{SAMPLE_DIR}/orientationtest.png")
     end
 
     it "0 no orientation" do
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [0, 0, 0, 128, 128, 128, 0, 0, 170, 170, 170, 255, 255, 255], pb.pixels.bytes
+      assert_equal [0, 0, 0, 128, 128, 128, 0, 0, 170, 170, 170, 255, 255, 255], pb.pixels
     end
 
     #0 row, 0 column
     it "1 top left" do
       assert @src.set_option('orientation', "1")
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [0, 0, 0, 128, 128, 128, 0, 0, 170, 170, 170, 255, 255, 255], pb.pixels.bytes
+      assert_equal [0, 0, 0, 128, 128, 128, 0, 0, 170, 170, 170, 255, 255, 255], pb.pixels
     end
 
     it "2 top right" do
       assert @src.set_option('orientation', "2")
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [128, 128, 128, 0, 0, 0, 0, 0, 255, 255, 255, 170, 170, 170], pb.pixels.bytes
+      assert_equal [128, 128, 128, 0, 0, 0, 0, 0, 255, 255, 255, 170, 170, 170], pb.pixels
     end
 
     it "3 bottom right" do
       assert @src.set_option('orientation', "3")
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [255, 255, 255, 170, 170, 170, 0, 0, 128, 128, 128, 0, 0, 0], pb.pixels.bytes
+      assert_equal [255, 255, 255, 170, 170, 170, 0, 0, 128, 128, 128, 0, 0, 0], pb.pixels
     end
 
     it "4 bottom left" do
       assert @src.set_option('orientation', "4")
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [170, 170, 170, 255, 255, 255, 0, 0, 0, 0, 0, 128, 128, 128], pb.pixels.bytes
+      assert_equal [170, 170, 170, 255, 255, 255, 0, 0, 0, 0, 0, 128, 128, 128], pb.pixels
     end
 
     it "5 left top" do
       assert @src.set_option('orientation', "5")
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [0, 0, 0, 170, 170, 170, 0, 0, 128, 128, 128, 255, 255, 255], pb.pixels.bytes
+      assert_equal [0, 0, 0, 170, 170, 170, 0, 0, 128, 128, 128, 255, 255, 255], pb.pixels
     end
 
     it "6 right top" do
       assert @src.set_option('orientation', "6")
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [170, 170, 170, 0, 0, 0, 0, 0, 255, 255, 255, 128, 128, 128], pb.pixels.bytes
+      assert_equal [170, 170, 170, 0, 0, 0, 0, 0, 255, 255, 255, 128, 128, 128], pb.pixels
     end
 
     it "7 right bottom" do
       assert @src.set_option('orientation', "7")
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [255, 255, 255, 128, 128, 128, 0, 0, 170, 170, 170, 0, 0, 0], pb.pixels.bytes
+      assert_equal [255, 255, 255, 128, 128, 128, 0, 0, 170, 170, 170, 0, 0, 0], pb.pixels
     end
 
     it "8 left bottom" do
       assert @src.set_option('orientation', "8")
       pb = @scaler.pixbuf_reorient @src
-      assert_equal [128, 128, 128, 255, 255, 255, 0, 0, 0, 0, 0, 170, 170, 170], pb.pixels.bytes
+      assert_equal [128, 128, 128, 255, 255, 255, 0, 0, 0, 0, 0, 170, 170, 170], pb.pixels
     end
 
   end

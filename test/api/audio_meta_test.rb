@@ -38,7 +38,7 @@ class AudioMetaTest < MetadorProcessorTest
     }
 
     expected = {
-        mime: 'audio/x-flac',
+        mime: 'audio/flac',
         meta: {
             duration: 3,
             audio: true,

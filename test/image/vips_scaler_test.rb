@@ -20,7 +20,7 @@ class VipsScalerTest < FixturedTest
     recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t1vips.jpg")
     assert recognized
     assert_equal 200, x
-    assert_equal 95, y
+    assert_equal 96, y
 #    p "Pixbuf big tiff #{time}"
   end
 

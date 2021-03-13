@@ -13,10 +13,11 @@ gem 'faraday' #Webhooks
 gem 'rbtrace' #Runtime analysis
 gem 'ffi'  #Link to libmagic
 gem 'attr_extras' #DI support
+gem 'rake'
 
 #Image processing
-gem 'gio2'
-gem 'gdk_pixbuf2'
+gem 'gio2', '3.4.3'
+gem 'gdk_pixbuf2', '3.4.3'
 gem 'exifr'
-gem 'ruby-vips', '1.0.3'
+gem 'ruby-vips', '2.1.0'
 gem 'mini_magick', '4.6.0'

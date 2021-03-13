@@ -1,8 +1,10 @@
 #!/bin/bash
-THIS_DIR=`dirname "$0"`
-RUBYAPP_DIR=`readlink -f "${THIS_DIR}/../"`
+set -e
+TEST_DIR=`dirname "$0"`
+RUBYAPP_DIR=`readlink -f "${TEST_DIR}/../"`
 echo "Adding /rubyapp-test with mount to $RUBYAPP_DIR (read-only)"
-docker build $RUBYAPP_DIR -f $THIS_DIR/docker/Dockerfile -t metador-test:latest
+docker build -t pgaertig/metador:latest $RUBYAPP_DIR
+docker build $RUBYAPP_DIR -f $TEST_DIR/docker/Dockerfile -t metador-test:latest
 docker run --rm -it \
            -v $RUBYAPP_DIR:/rubyapp-test:ro \
            -v $RUBYAPP_DIR/../../kp-test-files:/rubyapp-test-files:ro \
