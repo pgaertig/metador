@@ -23,7 +23,7 @@ class GdkScalerTest < FixturedTest
       assert @scaler.scale(infile:"#{SAMPLE_DIR}/804335.tif", outfile: "#{GEN_DIR}/t1gdk.jpg", ext:'jpg', size:200)
     end
     assert File.exist? "#{GEN_DIR}/t1gdk.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t1gdk.jpg")
+    recognized, x, y = GdkPixbuf::Pixbuf.get_file_info("#{GEN_DIR}/t1gdk.jpg")
     assert recognized
     assert_equal 200, x
     assert_equal 95, y
@@ -35,7 +35,7 @@ class GdkScalerTest < FixturedTest
       @scaler.scale(infile:"#{SAMPLE_DIR}/Metro_de_Madrid_-_Cuatro_Caminos_01.jpg", outfile: "#{GEN_DIR}/t2gdk.jpg", ext:'jpg', size:600)
     end
     assert File.exist? "#{GEN_DIR}/t2gdk.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t2gdk.jpg")
+    recognized, x, y = GdkPixbuf::Pixbuf.get_file_info("#{GEN_DIR}/t2gdk.jpg")
     assert recognized
     assert_equal 450, x
     assert_equal 600, y
@@ -43,20 +43,20 @@ class GdkScalerTest < FixturedTest
   end
 
   it "smaller should not scale" do
-    time = Benchmark.realtime do
+    _time = Benchmark.realtime do
       @scaler.scale(infile:"#{SAMPLE_DIR}/hotlink.png", outfile: "#{GEN_DIR}/t3gdk.jpg", ext:'jpg', size:600)
     end
     assert File.exist? "#{GEN_DIR}/t3gdk.jpg"
-    recognized, x, y = Gdk::Pixbuf.get_file_info("#{GEN_DIR}/t3gdk.jpg")
+    recognized, x, y = GdkPixbuf::Pixbuf.get_file_info("#{GEN_DIR}/t3gdk.jpg")
     assert recognized
     assert_equal 600, x
     assert_equal 468, y
-    p time
+    #p _time
   end
 
   describe "Reorients" do
     before do
-      @src = Gdk::Pixbuf.new(file: "#{SAMPLE_DIR}/orientationtest.png")
+      @src = GdkPixbuf::Pixbuf.new(file: "#{SAMPLE_DIR}/orientationtest.png")
     end
 
     it "0 no orientation" do

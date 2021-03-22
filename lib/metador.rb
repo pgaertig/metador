@@ -58,7 +58,7 @@ module Metador
 
       ch = conn.create_channel
       q  = ch.queue(config.broker_queue, durable: true)
-      x  = ch.default_exchange
+      _x = ch.default_exchange
       ch.prefetch 1
 
       runs = worker_lifetime
@@ -69,10 +69,10 @@ module Metador
         begin
           puts "Metador[#{pid}]: Received #{payload}"
           result = consume!(payload)
-          #x.publish(JSON.unparse(result), :routing_key => "")
+          #_x.publish(JSON.unparse(result), :routing_key => "")
           puts "Metador[#{pid}]: Reponded: #{result}"
           ch.ack(delivery_info.delivery_tag)
-        rescue => e
+        rescue => _e
           #sleep 1
           ch.nack(delivery_info.delivery_tag, true)
           puts "Metador[#{pid}]: #{$e} #{$e.backtrace}. Continuing next file."

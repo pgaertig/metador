@@ -21,7 +21,7 @@ module Metador
 
       def map_dest(path, clean: false)
         rd = map_path(path)
-        if clean && File.exists?(ds)
+        if clean && File.exist?(ds)
           File.unlink(ds)
         end
         rd

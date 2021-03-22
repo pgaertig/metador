@@ -69,7 +69,7 @@ module Metador
 
         ffmpeg_binding.screenshot(src, dest_path, time, w, h)
 
-        dest if File.exists? dest_path
+        dest if File.exist? dest_path
       end
     end
   end

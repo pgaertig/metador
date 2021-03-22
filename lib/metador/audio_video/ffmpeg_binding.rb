@@ -6,7 +6,7 @@ module Metador
 
       def initialize
         begin
-          /^ffmpeg version (?<version>(?<major>\d+)\.(?<minor>\d+)[^\s]+)\s/ =~ `ffmpeg -version`
+          /^ffmpeg version (?<version>(?<major>\d+)\.(?<_minor>\d+)[^\s]+)\s/ =~ `ffmpeg -version`
 
           unless major&.to_i >= 3
             raise "ffmpeg =>3.0 is required, detected: #{version}"

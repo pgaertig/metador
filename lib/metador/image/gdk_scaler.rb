@@ -19,17 +19,17 @@ module Metador
           when "2" then
             src.flip(true)
           when "3" then
-            src.rotate(Gdk::Pixbuf::ROTATE_UPSIDEDOWN)
+            src.rotate(GdkPixbuf::PixbufRotation::UPSIDEDOWN)
           when "4" then
-            src.rotate(Gdk::Pixbuf::ROTATE_UPSIDEDOWN).flip(true)
+            src.rotate(GdkPixbuf::PixbufRotation::UPSIDEDOWN).flip(true)
           when "5" then
-            src.rotate(Gdk::Pixbuf::ROTATE_CLOCKWISE).flip(true)
+            src.rotate(GdkPixbuf::PixbufRotation::CLOCKWISE).flip(true)
           when "6" then
-            src.rotate Gdk::Pixbuf::ROTATE_CLOCKWISE
+            src.rotate GdkPixbuf::PixbufRotation::CLOCKWISE
           when "7" then
-            src.rotate(Gdk::Pixbuf::ROTATE_COUNTERCLOCKWISE).flip(true)
+            src.rotate(GdkPixbuf::PixbufRotation::COUNTERCLOCKWISE).flip(true)
           when "8" then
-            src.rotate(Gdk::Pixbuf::ROTATE_COUNTERCLOCKWISE)
+            src.rotate(GdkPixbuf::PixbufRotation::COUNTERCLOCKWISE)
           else
             src
         end
@@ -40,7 +40,7 @@ module Metador
       private
 
       def resize_pixbuf infile, outfile, size, filetype
-        pixbuf = Gdk::Pixbuf.new(file:infile, width:size, height: size)
+        pixbuf = GdkPixbuf::Pixbuf.new(file:infile, width:size, height: size)
         pixbuf = pixbuf_reorient pixbuf
         pixbuf.save(outfile, filetype)
         return pixbuf.width, pixbuf.height

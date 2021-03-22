@@ -16,18 +16,16 @@ module Metador
 
 
         def initialize
-          if @db.nil?
-            @db = magic_open(MIME_TYPE)
-            magic_load(@db, nil)
-            ObjectSpace.define_finalizer(self) do
-              magic_close @db
-              @db = nil
-            end
+          @db = magic_open(MIME_TYPE)
+          magic_load(@db, nil)
+          ObjectSpace.define_finalizer(self) do
+            magic_close @db
+            @db = nil
           end
         end
 
         def mime(path)
-          out = magic_file(@db, path)
+          magic_file(@db, path)
         end
       end
 
