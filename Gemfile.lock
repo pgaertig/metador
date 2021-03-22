@@ -14,7 +14,7 @@ GEM
     exifr (1.2.5)
     faraday (0.10.0)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.14)
+    ffi (1.15.0)
     formatador (0.2.5)
     gdk_pixbuf2 (3.0.8)
       glib2 (= 3.0.8)
