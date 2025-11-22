@@ -10,15 +10,15 @@ module Metador
       end
 
       def scale(infile:nil, outfile:nil, mime:nil, ext:nil, size: 100)
-        MiniMagick::Tool::Convert.new do |conv|
+        MiniMagick.convert do |conv|
           dim = "#{size}x#{size}"
+          conv << (ext ? "#{ext}:#{infile}[0]" : infile)
           conv.thumbnail dim
           conv.background "white"
           conv.define "jpeg:size=#{dim}"
           conv.alpha "remove"
           conv.alpha "off"
           conv.auto_orient
-          conv << infile + "[0]"
           conv << outfile
         end
       end

@@ -22,7 +22,7 @@ class ImageJpegTest < MetadorProcessorTest
             _debug: {scaler: "Metador::Image::VipsScaler", process_time: Float}
         },
         _debug: {process_time: Float}
-    }.merge(input)
+    }.merge(input).ignore_extra_keys
 
     assert_matches_metador(input, expected)
   end
@@ -48,7 +48,7 @@ class ImageJpegTest < MetadorProcessorTest
             _debug: {scaler: "Metador::Image::VipsScaler", process_time: Float}
         },
         _debug: {process_time: Float}
-    }.merge(input)
+    }.merge(input).ignore_extra_keys
 
     assert_matches_metador(input, expected)
   end

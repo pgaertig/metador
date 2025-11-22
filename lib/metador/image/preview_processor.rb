@@ -1,4 +1,5 @@
 require 'mini_magick'
+require 'benchmark'
 
 class Metador::Image::PreviewProcessor
 
@@ -10,7 +11,6 @@ class Metador::Image::PreviewProcessor
         Metador::Util::PathMapper.new(config),
         [
             Metador::Image::VipsScaler.new,
-            Metador::Image::GdkScaler.new,
             Metador::Image::MagickScaler.new
         ]
     )
@@ -23,7 +23,7 @@ class Metador::Image::PreviewProcessor
       dest_path = path_mapper.map_dest(preview[:destination_file])
 
       src_path = path_mapper.map_src(data[:source_file])
-      src_ext = extension(data[:source_file])
+      src_ext = extension(data[:source_file]) || data[:type]
 
       scalers.each do |scaler|
         begin

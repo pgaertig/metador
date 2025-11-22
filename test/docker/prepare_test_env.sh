@@ -28,6 +28,8 @@ bundle exec guard
 bundle exec rake test
 EOF
 
-echo 'Test environment prepared run "bundle exec rake test" or "bundle exec rake guard". Restart the container to reload gem dependencies.'
+git config --global --add safe.directory /rubyapp-test
+
+echo 'Test environment prepared run "bundle exec rake test" or "bundle exec guard". Restart the container to reload gem dependencies.'
 
 /bin/bash

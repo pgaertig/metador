@@ -17,7 +17,7 @@ class MetadorProcessorTest < FixturedTest
   end
 
   def assert_matches_metador input, expected_output_expression
-    result = @metador.consume!(JSON.unparse(input))
+    result = @metador.consume!(JSON.generate(input))
     assert_json_match(expected_output_expression, result)
   end
 

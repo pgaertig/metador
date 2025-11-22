@@ -1,3 +1,5 @@
+require 'benchmark'
+
 module Metador
   class MetadorProcessor
 

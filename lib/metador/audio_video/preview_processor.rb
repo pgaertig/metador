@@ -1,3 +1,5 @@
+require 'benchmark'
+
 module Metador
   module AudioVideo
     class PreviewProcessor

@@ -14,10 +14,11 @@ gem 'rbtrace' #Runtime analysis
 gem 'ffi'  #Link to libmagic
 gem 'attr_extras' #DI support
 gem 'rake'
+gem 'mutex_m'
+gem 'ostruct'
+gem 'benchmark' # Measure time of processing
 
 #Image processing
-gem 'gio2', '3.4.3'
-gem 'gdk_pixbuf2', '3.4.3'
-gem 'exifr'
-gem 'ruby-vips', '2.1.0'
-gem 'mini_magick', '4.11.0'
+gem 'exiftool'
+gem 'ruby-vips'
+gem 'mini_magick'

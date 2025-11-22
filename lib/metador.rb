@@ -14,15 +14,13 @@ module Metador
   autoload :WebHookProcessor, 'metador/web_hook_processor'
 
   module Image
-    autoload :GdkScaler, 'metador/image/gdk_scaler'
     autoload :VipsScaler, 'metador/image/vips_scaler'
     autoload :MagickScaler, 'metador/image/magick_scaler'
     autoload :PreviewProcessor, 'metador/image/preview_processor'
   end
 
   module Util
-    autoload :PdfConverter, 'metador/util/pdf_converter'
-    autoload :MimeExtractor, 'metador/util/mime_extractor'
+    autoload :ExifExtractor, 'metador/util/exif_extractor'
     autoload :PathMapper, 'metador/util/path_mapper'
   end
 
@@ -42,7 +40,7 @@ module Metador
     end
 
     def consume!(raw_data)
-      JSON.unparse(
+      JSON.generate(
           @metador_processor.process(JSON.parse(raw_data, symbolize_names: true))
       )
     end
@@ -69,13 +67,13 @@ module Metador
         begin
           puts "Metador[#{pid}]: Received #{payload}"
           result = consume!(payload)
-          #_x.publish(JSON.unparse(result), :routing_key => "")
+          #_x.publish(JSON.generate(result), :routing_key => "")
           puts "Metador[#{pid}]: Reponded: #{result}"
           ch.ack(delivery_info.delivery_tag)
         rescue => _e
           #sleep 1
           ch.nack(delivery_info.delivery_tag, true)
-          puts "Metador[#{pid}]: #{$e} #{$e.backtrace}. Continuing next file."
+          puts "Metador[#{pid}]: #{_e} #{_e.backtrace}. Continuing next file."
         end
         runs -= 1
         if runs <= 0

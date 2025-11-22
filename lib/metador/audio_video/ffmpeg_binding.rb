@@ -26,14 +26,15 @@ module Metador
         cmd =
             "ffmpeg -y -ss #{time} -i #{Shellwords.escape(src_path)} " +
             " -v warning" +
-            ' -vf select="eq(pict_type\,I)" ' +
-            %Q{ -vf scale="iw*min(1\\,if(gt(iw\\,ih)\\,#{w}/iw\\,(#{h}*sar)/ih)):(floor((ow/dar)/2))*2" } +
+            %Q{ -vf select="eq(pict_type\\,I),scale=iw*min(1\\,if(gt(iw\\,ih)\\,#{w}/iw\\,(#{h}*sar)/ih)):(floor((ow/dar)/2))*2" } +
             ' -sws_flags fast_bilinear ' +
-            ' -q:v 2 -vframes 1 ' +
+            ' -q:v 2 -frames:v 1 -update 1 ' +
             ' -f image2 ' +
             Shellwords.escape(dest_path)
-        puts "+ #{cmd}"
         `#{cmd}`
+        unless $?.success?
+          warn "+ ffmpeg failed: #{cmd}"
+        end
       end
     end
   end

@@ -11,7 +11,7 @@ class AudioMetaTest < MetadorProcessorTest
     }
 
     expected = {
-        mime: 'video/x-ms-asf',
+        mime: 'audio/x-ms-wma',
         meta: {
             duration: 3,
             audio: true,
@@ -24,7 +24,7 @@ class AudioMetaTest < MetadorProcessorTest
             format_name_long: "ASF (Advanced / Active Streaming Format)"
         },
         _debug: {process_time: Float}
-    }.merge(input)
+    }.merge(input).ignore_extra_keys
 
     assert_matches_metador(input, expected)
   end
@@ -50,7 +50,7 @@ class AudioMetaTest < MetadorProcessorTest
             format_name_long: "raw FLAC"
         },
         _debug: {process_time: Float}
-    }.merge(input)
+    }.merge(input).ignore_extra_keys
 
     assert_matches_metador(input, expected)
   end

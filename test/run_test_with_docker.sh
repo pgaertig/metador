@@ -6,7 +6,7 @@ echo "Adding /rubyapp-test with mount to $RUBYAPP_DIR (read-only)"
 docker build -t pgaertig/metador:latest $RUBYAPP_DIR
 docker build $RUBYAPP_DIR -f $TEST_DIR/docker/Dockerfile -t metador-test:latest
 docker run --rm -it \
-           -v $RUBYAPP_DIR:/rubyapp-test:ro \
+           -v $RUBYAPP_DIR:/rubyapp-test \
            -v $RUBYAPP_DIR/../../kp-test-files:/rubyapp-test-files:ro \
            -v $RUBYAPP_DIR/../../kp-test-files/generated:/rubyapp-test-files/generated \
            --hostname=metador-test \

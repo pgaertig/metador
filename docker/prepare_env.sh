@@ -1,5 +1,7 @@
 #!/bin/bash
 echo "ffmpeg `ffmpeg -version`"
+echo "Ruby `ruby -v`"
+echo "ImageMagick `magick -version`"
 
 export USER_ID=${LOCAL_USER_ID:-1000}
 export GROUP_ID=${LOCAL_GROUP_ID:-1000}

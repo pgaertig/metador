@@ -4,8 +4,7 @@ require 'minitest/autorun'
 require 'ostruct'
 require 'json_expressions/minitest'
 
-
-class FixturedTest < MiniTest::Spec
+class FixturedTest < Minitest::Spec
   CONTAINER_TEST_FILES = '/rubyapp-test-files'
   TEST_FIXTURES = File.directory?(CONTAINER_TEST_FILES) ?
       CONTAINER_TEST_FILES : File.expand_path('../../../kp-test-files', __FILE__)

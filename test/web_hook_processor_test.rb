@@ -1,6 +1,6 @@
 require_relative 'test_helper'
 
-class WebHookProcessorTest < MiniTest::Spec
+class WebHookProcessorTest < Minitest::Spec
   describe "WebHookProcessor" do
     it "works" do
       skip "TBD"
