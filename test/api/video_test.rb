@@ -36,7 +36,7 @@ class VideoTest < MetadorProcessorTest
             format_name_long: "QuickTime / MOV"
         },
         _debug: {process_time: Float}
-    }.merge(input).ignore_extra_keys
+    }.merge(input)
 
     assert_matches_metador(input, expected)
   end
@@ -82,7 +82,7 @@ class VideoTest < MetadorProcessorTest
             creation_time: "2016-10-05T15:48:09.000000Z"
         },
         _debug: {process_time: Float}
-    }.merge(input).ignore_extra_keys
+    }.merge(input)
 
     assert_matches_metador(input, expected)
   end
@@ -127,7 +127,7 @@ class VideoTest < MetadorProcessorTest
             creation_time: "2016-08-25T12:21:09.000000Z"
         },
         _debug: {process_time: Float}
-    }.merge(input).ignore_extra_keys
+    }.merge(input)
 
     assert_matches_metador(input, expected)
   end

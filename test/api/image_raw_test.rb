@@ -22,7 +22,7 @@ class ImageRawTest < MetadorProcessorTest
             _debug: {scaler: "Metador::Image::MagickScaler", process_time: Float}
         },
         _debug: {process_time: Float}
-    }.merge(input).ignore_extra_keys
+    }.merge(input)
 
     assert_matches_metador(input, expected)
   end
@@ -48,7 +48,7 @@ class ImageRawTest < MetadorProcessorTest
         _debug: {scaler: "Metador::Image::MagickScaler", process_time: Float}
       },
       _debug: {process_time: Float}
-    }.merge(input).ignore_extra_keys
+    }.merge(input)
 
     assert_matches_metador(input, expected)
   end
@@ -74,7 +74,7 @@ class ImageRawTest < MetadorProcessorTest
         _debug: {scaler: "Metador::Image::MagickScaler", process_time: Float}
       },
       _debug: {process_time: Float}
-    }.merge(input).ignore_extra_keys
+    }.merge(input)
 
     assert_matches_metador(input, expected)
   end

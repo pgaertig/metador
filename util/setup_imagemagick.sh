@@ -25,8 +25,9 @@ DELEGATES_SHA=(`sha1sum /etc/ImageMagick-7/delegates.xml`)
 cp $SCRIPTDIR/delegates.xml /etc/ImageMagick-7/
 
 # In case below fails policy.xml needs to be revised for any changes
+# Current hash is from imagemagick-7-common 8:7.1.1.43+dfsg1-1+deb13u11
 POLICY_SHA=(`sha1sum /etc/ImageMagick-7/policy.xml`)
-[ "$POLICY_SHA" == "8b683209a588ca015ddddbe80f25c2fa444b863d" ]
+[ "$POLICY_SHA" == "0fbce8c211e3e905610201aa8bbf82bd9787a512" ]
 
 cp $SCRIPTDIR/policy.xml /etc/ImageMagick-7/
 

@@ -1,4 +1,4 @@
-FROM ruby:3.4-slim-trixie
+FROM ruby:4.0-slim-trixie
 
 ENV DEBIAN_FRONTEND=noninteractive HOME=/rubyapp GEM_HOME=/rubyapp/.gems
 
@@ -8,12 +8,12 @@ ENV DEBIAN_FRONTEND=noninteractive HOME=/rubyapp GEM_HOME=/rubyapp/.gems
 #   - Libraw for ImageMagick for cameras RAW files
 #   - libmagic - detecting file formats
 #   - ghostscript - PDF conversion
-#   - Ruby 3.3
+#   - jemalloc - improved allocator
 RUN apt-get update -yq && apt-get dist-upgrade -yq && \
     echo "Installing binary dependencies..." && \
     apt-get install -yq --no-install-recommends \
                         imagemagick ffmpeg libvips ghostscript \
-                        libraw-bin libmagic1 exiftool dumb-init git && \
+                        libraw-bin libmagic1 exiftool dumb-init git libjemalloc2 && \
     echo "Cleaning up..." && \
     apt-get -y autoremove && apt-get -y clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/{man,doc,locale,zoneinfo,icons}
 
@@ -27,7 +27,9 @@ ADD util /rubyapp/util
 RUN apt-get update -yq && \
     apt-get install -yq build-essential libraw-dev libvips-dev git && \
     cd /rubyapp && \
-    bundle install --clean --force --no-cache --system --without development && \
+    bundle config set --local clean true && \
+    bundle config set --local without development && \
+    bundle install --force --no-cache && \
     /rubyapp/util/setup_imagemagick.sh && \
     apt-get remove -yq build-essential libraw-dev libvips-dev && apt-get autoremove -yq && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/{man,doc,locale,zoneinfo,icons} && \

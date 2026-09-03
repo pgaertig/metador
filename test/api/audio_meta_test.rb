@@ -24,7 +24,7 @@ class AudioMetaTest < MetadorProcessorTest
             format_name_long: "ASF (Advanced / Active Streaming Format)"
         },
         _debug: {process_time: Float}
-    }.merge(input).ignore_extra_keys
+    }.merge(input)
 
     assert_matches_metador(input, expected)
   end
@@ -50,7 +50,7 @@ class AudioMetaTest < MetadorProcessorTest
             format_name_long: "raw FLAC"
         },
         _debug: {process_time: Float}
-    }.merge(input).ignore_extra_keys
+    }.merge(input)
 
     assert_matches_metador(input, expected)
   end

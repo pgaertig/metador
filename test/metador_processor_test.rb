@@ -16,9 +16,29 @@ class MetadorProcessorTest < FixturedTest
     @metador = Metador::MessageHandler.new(@config)
   end
 
-  def assert_matches_metador input, expected_output_expression
-    result = @metador.consume!(JSON.generate(input))
-    assert_json_match(expected_output_expression, result)
+  def assert_matches_metador input, expected
+    actual = JSON.parse(@metador.consume!(JSON.generate(input)), symbolize_names: true)
+    assert_matches_subset expected, actual
+  end
+
+  def assert_matches_subset expected, actual, path = []
+    at = path.empty? ? '(root)' : path.join('.')
+    case expected
+    when Hash
+      assert_kind_of Hash, actual, at
+      expected.each do |key, value|
+        assert actual.key?(key), "missing key at #{at}.#{key}"
+        assert_matches_subset value, actual[key], path + [key]
+      end
+    when Array
+      assert_kind_of Array, actual, at
+      assert_equal expected.size, actual.size, "array size at #{at}"
+      expected.each_with_index { |value, i| assert_matches_subset value, actual[i], path + [i] }
+    when Module
+      assert_kind_of expected, actual, at
+    else
+      assert_equal expected, actual, at
+    end
   end
 
 end

@@ -1,3 +1,8 @@
+1.4.0 on 2026-09-03
+ + Ruby 4.0.6 + jemalloc, dependency upgrades
+ + HEIC/HEIF/AVIF scaled by VipsScaler
+ + MagickScaler small image scaling fix
+
 1.1.0 on 2017-09-13
  + Parallel processing workers
 

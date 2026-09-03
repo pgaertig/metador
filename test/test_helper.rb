@@ -2,7 +2,6 @@ require 'bundler/setup'
 require 'metador'
 require 'minitest/autorun'
 require 'ostruct'
-require 'json_expressions/minitest'
 
 class FixturedTest < Minitest::Spec
   CONTAINER_TEST_FILES = '/rubyapp-test-files'

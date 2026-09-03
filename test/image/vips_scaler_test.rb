@@ -135,5 +135,45 @@ class VipsScalerTest < FixturedTest
 #    p _time
   end
 
+  it "accepts heic heif and avif by mime" do
+    assert @scaler.accepts_mime?('image/heic', 'heic')
+    assert @scaler.accepts_mime?('image/heif', 'heic')
+    assert @scaler.accepts_mime?('image/heif', 'heif')
+    assert @scaler.accepts_mime?('image/avif', 'avif')
+  end
+
+  it "rejects formats it cannot decode" do
+    refute @scaler.accepts_mime?('application/pdf', 'pdf')
+    refute @scaler.accepts_mime?('image/x-nikon-nef', 'nef')
+    refute @scaler.accepts_mime?('image/tiff', 'nef')
+  end
+
+  it "heic scale" do
+    @scaler.scale(infile: "#{@image_dir}/sample.heic", outfile: "#{GEN_DIR}/heic-vips.jpg",
+                  mime: 'image/heif', ext: 'heic', size: 400)
+    assert File.exist? "#{GEN_DIR}/heic-vips.jpg"
+    recognized, x, y = get_file_info_via_exif("#{GEN_DIR}/heic-vips.jpg")
+    assert recognized
+    assert_equal 400, x
+    assert_equal 267, y
+  end
+
+  it "smaller heic should not upscale" do
+    @scaler.scale(infile: "#{@image_dir}/sample.heic", outfile: "#{GEN_DIR}/heic-vips-no-upscale.jpg",
+                  mime: 'image/heif', ext: 'heic', size: 1600)
+    recognized, x, y = get_file_info_via_exif("#{GEN_DIR}/heic-vips-no-upscale.jpg")
+    assert recognized
+    assert_equal 1440, x
+    assert_equal 960, y
+  end
+
+  it "rotated heic uses container rotation" do
+    @scaler.scale(infile: "#{@image_dir}/sample-rotated.heic", outfile: "#{GEN_DIR}/heic-vips-rotated.jpg",
+                  mime: 'image/heif', ext: 'heic', size: 400)
+    recognized, x, y = get_file_info_via_exif("#{GEN_DIR}/heic-vips-rotated.jpg")
+    assert recognized
+    assert_equal 225, x
+    assert_equal 400, y
+  end
 
 end

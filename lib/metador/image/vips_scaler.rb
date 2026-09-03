@@ -10,7 +10,8 @@ module Metador
 
       def accepts_mime?(mime, ext=nil)
         #Unfortunately libmagic recognizes some camera RAW files as TIFFs and Vips can't process them properly
-        mime =~ /^image\/(jpeg|png)/ || (mime == 'image/tiff' && ext && ext =~ /^tiff?$/)
+        mime =~ /^image\/(jpeg|png|hei[cf]|avif)/ ||
+          (mime == 'image/tiff' && ext && ext =~ /^tiff?$/)
       end
 
       def scale(infile:nil, outfile:nil, mime:nil, ext:nil, size: 100, upscale:false)

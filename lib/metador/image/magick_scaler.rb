@@ -13,7 +13,7 @@ module Metador
         MiniMagick.convert do |conv|
           dim = "#{size}x#{size}"
           conv << (ext ? "#{ext}:#{infile}[0]" : infile)
-          conv.thumbnail dim
+          conv.thumbnail "#{dim}>"
           conv.background "white"
           conv.define "jpeg:size=#{dim}"
           conv.alpha "remove"
