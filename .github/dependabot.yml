@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # Base image digest in Dockerfile, bumped when ruby:4.0-slim-trixie is republished
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+
+  # SHA-pinned actions in .github/workflows
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
