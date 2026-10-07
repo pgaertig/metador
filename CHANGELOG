@@ -1,3 +1,6 @@
+1.5.0 on 2026-10-07
+ + Camera RAW previews from the embedded JPEG, fixes noise on Nikon HE/HE* NEF
+
 1.4.0 on 2026-09-03
  + Ruby 4.0.6 + jemalloc, dependency upgrades
  + HEIC/HEIF/AVIF scaled by VipsScaler

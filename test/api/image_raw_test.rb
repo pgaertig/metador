@@ -19,7 +19,7 @@ class ImageRawTest < MetadorProcessorTest
             width: 401,
             height: 600,
             destination_file: 'generated/raw1-nef.jpg',
-            _debug: {scaler: "Metador::Image::MagickScaler", process_time: Float}
+            _debug: {scaler: "Metador::Image::RawEmbeddedScaler", process_time: Float}
         },
         _debug: {process_time: Float}
     }.merge(input)
@@ -43,9 +43,9 @@ class ImageRawTest < MetadorProcessorTest
       mime: 'image/x-canon-cr3', #that is bad really
       preview: {
         width: 600,
-        height: 401,
+        height: 400,
         destination_file: 'generated/raw2-cr3.jpg',
-        _debug: {scaler: "Metador::Image::MagickScaler", process_time: Float}
+        _debug: {scaler: "Metador::Image::RawEmbeddedScaler", process_time: Float}
       },
       _debug: {process_time: Float}
     }.merge(input)
@@ -71,7 +71,33 @@ class ImageRawTest < MetadorProcessorTest
         width: 600,
         height: 400,
         destination_file: 'generated/raw3-arw.jpg',
-        _debug: {scaler: "Metador::Image::MagickScaler", process_time: Float}
+        _debug: {scaler: "Metador::Image::RawEmbeddedScaler", process_time: Float}
+      },
+      _debug: {process_time: Float}
+    }.merge(input)
+
+    assert_matches_metador(input, expected)
+  end
+
+  it "process Nikon High Efficiency* NEF" do
+    input = {
+      source_file: 'image/raw4-he.NEF',
+      query: {
+        preview: {
+          size: 600,
+          destination_file: "generated/raw4-he-nef"
+        },
+        meta: true,
+      }
+    }
+
+    expected = {
+      mime: 'image/x-nikon-nrw', # exiftool reports HE NEF as NRW, scaler picks it by extension
+      preview: {
+        width: 600,
+        height: 400,
+        destination_file: 'generated/raw4-he-nef.jpg',
+        _debug: {scaler: "Metador::Image::RawEmbeddedScaler", process_time: Float}
       },
       _debug: {process_time: Float}
     }.merge(input)

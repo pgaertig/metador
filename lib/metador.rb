@@ -16,6 +16,7 @@ module Metador
   module Image
     autoload :VipsScaler, 'metador/image/vips_scaler'
     autoload :MagickScaler, 'metador/image/magick_scaler'
+    autoload :RawEmbeddedScaler, 'metador/image/raw_embedded_scaler'
     autoload :PreviewProcessor, 'metador/image/preview_processor'
   end
 

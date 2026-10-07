@@ -11,6 +11,7 @@ class Metador::Image::PreviewProcessor
         Metador::Util::PathMapper.new(config),
         [
             Metador::Image::VipsScaler.new,
+            Metador::Image::RawEmbeddedScaler.new,
             Metador::Image::MagickScaler.new
         ]
     )
