@@ -22,8 +22,9 @@ module Metador
       data
     end
 
+    # Caller already knows the type
     def accepts?(data)
-      true #Always detect source file mime
+      !data[:mime]
     end
   end
 end

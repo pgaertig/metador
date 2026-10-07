@@ -52,4 +52,22 @@ class ImageJpegTest < MetadorProcessorTest
 
     assert_matches_metador(input, expected)
   end
+
+  it "skips exiftool when mime is given" do
+    input = {
+        source_file: 'image/IMG_2033.JPG',
+        mime: 'image/jpeg',
+        query: {
+            preview: {
+                size: 100,
+                destination_file: "generated/IMG_2033-known-mime"
+            }
+        }
+    }
+
+    actual = JSON.parse(@metador.consume!(JSON.generate(input)), symbolize_names: true)
+    refute actual.key?(:exif), 'exiftool should not run when mime is known'
+    assert_matches_subset({width: 75, height: 100, _debug: {scaler: "Metador::Image::VipsScaler", process_time: Float}},
+                          actual[:preview])
+  end
 end

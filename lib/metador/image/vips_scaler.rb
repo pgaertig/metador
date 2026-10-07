@@ -14,11 +14,11 @@ module Metador
           (mime == 'image/tiff' && ext && ext =~ /^tiff?$/)
       end
 
-      def scale(infile:nil, outfile:nil, mime:nil, ext:nil, size: 100, upscale:false)
-        resize_vips infile, outfile, size, mime, upscale
+      def scale(infile:nil, outfile:nil, mime:nil, ext:nil, size: 100, upscale:false, orientation: nil, **)
+        resize_vips infile, outfile, size, mime, upscale, orientation
       end
 
-      def resize_vips infile, outfile, size, mime, upscale
+      def resize_vips infile, outfile, size, mime, upscale, orientation = nil
         mask = [
             [-1, -1,  -1],
             [-1,  32, -1,],
@@ -26,7 +26,8 @@ module Metador
         ]
         m = Vips::Image.new_from_array(mask, 24)
 
-        a = vips_load_file infile, mime
+        autorotate = orientation.nil? # given orientation replaces the file's own EXIF
+        a = vips_load_file infile, mime, 1, autorotate
 
         d = [a.width, a.height].max
         scale = d / size.to_f
@@ -42,7 +43,7 @@ module Metador
 
           if load_scale
             #p "JPEG shrink optimization: #{load_scale}"
-            a = vips_load_file infile, mime, load_scale
+            a = vips_load_file infile, mime, load_scale, autorotate
 
             d = [a.width, a.height].max
             scale = d / size.to_f
@@ -63,7 +64,7 @@ module Metador
           a = a.conv(m)
         end
 
-        a = vips_reorient a
+        a = vips_reorient a, orientation
 
 #        jpeg = Vips::JPEGWriter.new(a, {:quality => 75})
 #        jpeg.remove_icc
@@ -77,9 +78,10 @@ module Metador
         end
       end
 
-      def vips_reorient src
+      # orientation: EXIF value from outside the file, used for JPEG embedded in a RAW container
+      def vips_reorient src, orientation = nil
         begin
-          orient = src.get("exif-Orientation") || src.get("exif-ifd0-Orientation") || "X"
+          orient = orientation&.to_s || src.get("exif-Orientation") || src.get("exif-ifd0-Orientation") || "X"
           orient = orient[0]
           case orient
             when "2" then
@@ -104,10 +106,10 @@ module Metador
         end
       end
 
-      def vips_load_file(infile, mime, shrink_level=1)
+      def vips_load_file(infile, mime, shrink_level=1, autorotate=true)
         if mime == JPEG_MIME
           Vips::Image.new_from_file infile, access: :sequential,
-                           shrink: shrink_level, autorotate: true
+                           shrink: shrink_level, autorotate: autorotate
         else
           Vips::Image.new_from_file infile, access: :sequential
         end

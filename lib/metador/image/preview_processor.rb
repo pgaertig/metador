@@ -35,6 +35,7 @@ class Metador::Image::PreviewProcessor
                 size: preview_query[:size],
                 mime: data[:mime],
                 ext: src_ext,
+                exif: data[:exif],
             ) if scaler.accepts_mime?(data[:mime], src_ext)
           end
 

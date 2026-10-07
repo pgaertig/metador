@@ -17,8 +17,13 @@ module Metador
       f.post do |req|
         req.url data[:webhook]
         req.headers['Content-Type'] = 'application/json'
-        req.body = data.to_json
+        req.body = payload(data).to_json
       end
+    end
+
+    # Full EXIF only on request (query.exif)
+    def payload(data)
+      data.dig(:query, :exif) ? data : data.except(:exif)
     end
 
     def accepts?(data)

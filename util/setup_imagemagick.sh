@@ -1,22 +1,8 @@
 #!/bin/bash -ex
 
-# This script prepares libraw converter and configures ImageMagic to process all RAW images thru it.
+# Installs customised ImageMagick delegates.xml and policy.xml after verifying the stock ones did not change.
 
 SCRIPTDIR=$(dirname `readlink -f $0`)
-SRC="$SCRIPTDIR/libraw_convert.c"
-OUT="$SCRIPTDIR/libraw_convert"
-
-# Prefer pkg-config if available so include paths and libs are correct for the installed libraw.
-if command -v pkg-config >/dev/null 2>&1 && pkg-config --exists libraw; then
-  CFLAGS=$(pkg-config --cflags libraw)
-  LDFLAGS=$(pkg-config --libs libraw)
-  gcc -w $CFLAGS "$SRC" -o "$OUT" $LDFLAGS
-else
-  # Older systems or missing pkg-config: ensure -lraw is placed after the source so the linker finds symbols.
-  gcc -w "$SRC" -o "$OUT" -lraw
-fi
-
-cp "$OUT" /usr/bin/
 
 # In case below fails delegates.xml needs to be revised for any changes
 DELEGATES_SHA=(`sha1sum /etc/ImageMagick-7/delegates.xml`)
