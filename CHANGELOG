@@ -1,3 +1,6 @@
+1.6.1 on 2026-10-12
+ + Fix portrait RAW previews, libvips limited to 2 threads
+
 1.6.0
  + General optimizations: removed unused code and binaries
  + Faster previews: RAW embedded JPEG read from EXIF offsets

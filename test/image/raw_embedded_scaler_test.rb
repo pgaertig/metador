@@ -64,6 +64,18 @@ class RawEmbeddedScalerTest < FixturedTest
     assert_equal [401, 600], scaled_size(out)
   end
 
+  it "rotates a full size portrait preview with few vips threads" do
+    out = "#{GEN_DIR}/raw1-few-threads.jpg"
+    nef = "#{@image_dir}/raw1.NEF"
+    begin
+      Vips.concurrency_set(1)
+      @scaler.scale(infile: nef, outfile: out, ext: 'nef', size: 1600, exif: exif_of(nef))
+    ensure
+      Vips.concurrency_set(0)
+    end
+    assert_equal [1068, 1600], scaled_size(out)
+  end
+
   it "falls back to exiftool when EXIF has no offsets" do
     out = "#{GEN_DIR}/raw2-fallback.jpg"
     cr3 = "#{@image_dir}/raw2.CR3"

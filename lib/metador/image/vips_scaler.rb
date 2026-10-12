@@ -83,6 +83,8 @@ module Metador
         begin
           orient = orientation&.to_s || src.get("exif-Orientation") || src.get("exif-ifd0-Orientation") || "X"
           orient = orient[0]
+          # Rotating reads pixels out of order, a sequential source rejects that depending on thread count
+          src = src.copy_memory if ("2".."8").cover?(orient)
           case orient
             when "2" then
               src.fliphor

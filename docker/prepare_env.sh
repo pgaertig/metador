@@ -8,6 +8,8 @@ export GROUP_ID=${LOCAL_GROUP_ID:-1000}
 export ENV=${CONFIG_ENV:-development}
 
 export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
+# libvips threads per worker (default is one per CPU)
+export VIPS_CONCURRENCY=${VIPS_CONCURRENCY:-2}
 export LD_LIBRARY_PATH=/usr/local/lib
 export GI_TYPELIB_PATH=/usr/local/lib/girepository-1.0
 
